@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
+    
     /// Represents the Java learning roadmap.
     /// </summary>
     public class JavaLevel : LanguageLevel
