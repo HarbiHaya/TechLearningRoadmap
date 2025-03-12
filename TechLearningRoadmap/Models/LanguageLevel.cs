@@ -32,7 +32,7 @@ namespace TechLearningRoadmap.Models
         }
 
         /// <summary>
-        /// Abstract method to be implemented by subclasses to assign learning resources.
+        /// Abstract method to be implemented by subclasses to assign learning resources...
         /// </summary>
         protected abstract void AssignRoadmap();
 
