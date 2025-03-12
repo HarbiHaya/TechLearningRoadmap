@@ -18,7 +18,7 @@ namespace TechLearningRoadmap.Models
         /// </summary>
         protected override void AssignRoadmap()
         {
-            LearningResources[Level.Beginner] = "Java for Beginners: https://www.w3schools.com/java/";
+            LearningResources[Level.Beginner] = "Java for Beginners:  https://www.w3schools.com/java/";
             LearningResources[Level.Intermediate] = "Java Intermediate Concepts: https://docs.oracle.com/javase/tutorial/";
             LearningResources[Level.Advanced] = "Advanced Java Programming: https://developer.oracle.com/java/";
         }

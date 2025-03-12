@@ -6,29 +6,42 @@ using TechLearningRoadmap.UI;
  using TechLearningRoadmap.Services;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI.TechLearningRoadmap.UI;
-class Program
+using System;
+
+
+namespace TechLearningRoadmap
 {
-    static void Main()
+    class Program
     {
-        // Initialize Data Managers
-        var userManager = new DataManager<UserAccount>();
-        var adminManager = new DataManager<AdminAccount>();
-
-        // Create a default admin account if none exists
-        if (adminManager.GetAll().Count == 0)
+        static void Main(string[] args)
         {
-            adminManager.Insert(new AdminAccount("admin", "Admin@123"));
-            Console.WriteLine("Default admin account created (Username: admin, Password: Admin@123)");
+            Console.WriteLine("🔹 Tech Learning Roadmap System 🔹");
+
+            // Initialize Data Managers
+            DataManager<UserAccount> userManager = new DataManager<UserAccount>();
+            DataManager<AdminAccount> adminManager = new DataManager<AdminAccount>();
+
+            // Predefined Admin Account
+            AdminAccount admin1 = new AdminAccount("jana", "JanaA123@");
+            adminManager.Insert(admin1);
+
+            AdminAccount admin2 = new AdminAccount("haya", "HayaA123@");
+            adminManager.Insert(admin1);
+
+            AdminAccount admin3 = new AdminAccount("shahad", "ShahadD123@");
+            adminManager.Insert(admin1);
+
+            AdminAccount admin4 = new AdminAccount("mayar", "MayarR123@");
+            adminManager.Insert(admin1);
+
+
+            // Initialize Services
+            AuthService authService = new AuthService(userManager, adminManager);
+            RoadmapService roadmapService = new RoadmapService();
+            Menu menu = new Menu(authService, roadmapService, userManager, adminManager);
+
+            // ✅ Start Main Menu
+            menu.DisplayMenu();
         }
-
-        // Initialize Services
-        var authService = new AuthService(userManager, adminManager);
-        var roadmapService = new RoadmapService();
-
-        // Initialize Menu System
-        var menu = new Menu(authService, roadmapService, userManager, adminManager);
-
-        // Start the Application
-        menu.DisplayMenu();
     }
 }
