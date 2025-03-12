@@ -15,6 +15,10 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
 namespace TechLearningRoadmap.Models
 {
     /// <summary>
@@ -32,37 +36,18 @@ namespace TechLearningRoadmap.Models
         }
 
         /// <summary>
-        /// Hashes the password using SHA-256.
-        /// </summary>
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (byte b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-
-        /// <summary>
         /// Updates the password securely.
         /// </summary>
         public void UpdatePassword(string newPassword)
         {
-            SetPassword(newPassword);
-            Console.WriteLine("Password has been updated successfully.");
-        }
+            if (string.IsNullOrWhiteSpace(newPassword))
+            {
+                Console.WriteLine(" Error: Password cannot be empty.");
+                return;
+            }
 
-        /// <summary>
-        /// Securely sets the password hash.
-        /// </summary>
-        private void SetPassword(string password)
-        {
-            PasswordHash = HashPassword(password);
+            SetPassword(newPassword);
+            Console.WriteLine(" Password has been updated successfully.");
         }
 
         /// <summary>
@@ -70,7 +55,41 @@ namespace TechLearningRoadmap.Models
         /// </summary>
         public bool Login(string username, string password)
         {
-            return Username == username && PasswordHash == HashPassword(password);
+            if (Username == username && PasswordHash == HashPassword(password))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("❌ Error: Invalid username or password.");
+                return false;
+            }
+        }
+
+        /// sets password
+       
+        private void SetPassword(string password)
+        {
+            PasswordHash = HashPassword(password);
+        }
+
+        /// <summary>
+        /// Hashes the password using SHA-256.
+        /// </summary>
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hashBytes = sha256.ComputeHash(bytes);
+
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
         /// <summary>

@@ -7,20 +7,22 @@ using System.Threading.Tasks;
 namespace TechLearningRoadmap.Models
 {
     /// <summary>
-    /// Enum for supported programming languages.
+    /// Represents available programming languages.
     /// </summary>
     public enum Language
     {
+        None,  // ✅ Default value when the user hasn't selected a language
         CSharp,
         Java,
         Python
     }
 
     /// <summary>
-    /// Enum for user learning levels.
+    /// Represents experience levels in a programming language.
     /// </summary>
     public enum Level
     {
+        None,  // ✅ Default value when the user hasn't selected a level
         Beginner,
         Intermediate,
         Advanced

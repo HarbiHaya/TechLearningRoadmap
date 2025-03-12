@@ -41,15 +41,16 @@ namespace TechLearningRoadmap.Models
         /// </summary>
         public string GetLearningResource()
         {
-            if (LearningResources.TryGetValue(UserLevel, out string resource))
+            if (LearningResources.ContainsKey(UserLevel))
             {
-                return resource;
+                return LearningResources[UserLevel];
             }
             else
             {
                 throw new InvalidOperationException("No resources available for the selected level.");
             }
         }
+
 
         /// <summary>
         /// Displays the assigned roadmap to the user.

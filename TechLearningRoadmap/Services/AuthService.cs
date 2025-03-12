@@ -25,45 +25,55 @@ namespace TechLearningRoadmap.Services
             this.adminManager = adminManager;
         }
 
-        /// <summary>
-        /// Registers a new user in the system.
-        /// </summary>
         public void RegisterUser()
         {
             string username = InputValidation.ValidateStringInput("Enter a username");
-            string password = InputValidation.ValidateStringInput("Enter a secure password (8+ characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character)");
+
+            string password = InputValidation.GetValidatedPassword(); // Ensures password is valid
 
             UserAccount newUser = new UserAccount(username, password);
             userManager.Insert(newUser);
+
+            Console.WriteLine("✅ Registration successful! You can now log in.");
         }
 
-        /// <summary>
-        /// Handles user login and returns an account if successful.
-        /// </summary>
-        public Account Login()
+        public Account LoginUser()
         {
             string username = InputValidation.ValidateStringInput("Enter your username");
-            string password = InputValidation.ValidateStringInput("Enter your password");
+            string password = InputValidation.GetHiddenPassword("Enter your password");
 
             UserAccount user = userManager.Search(username);
-            AdminAccount admin = adminManager.Search(username);
 
             if (user != null && user.Login(username, password))
             {
-                Console.WriteLine("Login successful. Redirecting to user dashboard...");
+                Console.WriteLine("✅ Login successful. Redirecting to user dashboard...");
                 return user;
             }
-            else if (admin != null && admin.Login(username, password))
+            else
             {
-                Console.WriteLine("Admin login successful. Redirecting to admin panel...");
+                Console.WriteLine("❌ Invalid credentials. Please try again.");
+                return null;
+            }
+        }
+
+        public Account LoginAdmin()
+        {
+            string username = InputValidation.ValidateStringInput("Enter admin username");
+            string password = InputValidation.GetHiddenPassword("Enter admin password");
+
+            AdminAccount admin = adminManager.Search(username);
+
+            if (admin != null && admin.Login(username, password))
+            {
+                Console.WriteLine("✅ Admin login successful. Redirecting to admin panel...");
                 return admin;
             }
             else
             {
-                Console.WriteLine("Invalid credentials. Please try again.");
+                Console.WriteLine("❌ Invalid credentials. Please try again.");
                 return null;
             }
         }
+
     }
 }
-

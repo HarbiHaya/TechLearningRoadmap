@@ -14,116 +14,143 @@ namespace TechLearningRoadmap.UI
     /// <summary>
     /// Manages the main menu and user interactions.
     /// </summary>
-    public class Menu
+    using System;
+
+
+    namespace TechLearningRoadmap.UI
     {
-        private AuthService authService;
-        private RoadmapService roadmapService;
-        private DataManager<UserAccount> userManager;
-        private DataManager<AdminAccount> adminManager;
-
-        public Menu(AuthService authService, RoadmapService roadmapService, DataManager<UserAccount> userManager, DataManager<AdminAccount> adminManager)
-        {
-            this.authService = authService;
-            this.roadmapService = roadmapService;
-            this.userManager = userManager;
-            this.adminManager = adminManager;
-        }
-
         /// <summary>
-        /// Displays the main menu and handles user selections.
+        /// Manages the main menu and user interactions.
         /// </summary>
-        public void DisplayMenu()
+        public class Menu
         {
-            while (true)
+            private AuthService authService;
+            private RoadmapService roadmapService;
+            private DataManager<UserAccount> userManager;
+            private DataManager<AdminAccount> adminManager;
+
+            public Menu(AuthService authService, RoadmapService roadmapService, DataManager<UserAccount> userManager, DataManager<AdminAccount> adminManager)
             {
-                Console.WriteLine("\n=== Welcome to Tech Learning Roadmap ===");
-                Console.WriteLine("1. Register");
-                Console.WriteLine("2. Login");
-                Console.WriteLine("3. Exit");
+                this.authService = authService;
+                this.roadmapService = roadmapService;
+                this.userManager = userManager;
+                this.adminManager = adminManager;
+            }
 
-                int choice = InputValidation.ValidateMenuSelection(1, 3);
+            /// <summary>
+            /// Displays the main menu and handles user selections.
+            /// </summary>
+            public void DisplayMenu()
+            {
+                while (true)
+                {
+                    Console.WriteLine("\n=== Welcome to Tech Learning Roadmap ===");
+                    Console.WriteLine("1. Register");
+                    Console.WriteLine("2. User Login");
+                    Console.WriteLine("3. Admin Login");
+                    Console.WriteLine("4. Exit");
 
-                if (choice == 1)
-                {
-                    authService.RegisterUser();
-                }
-                else if (choice == 2)
-                {
-                    Account account = authService.Login();
-                    if (account is UserAccount user)
+                    int choice = InputValidation.ValidateMenuSelection(1, 4);
+
+                    if (choice == 1)
                     {
-                        DisplayUserMenu(user);
+                        authService.RegisterUser();
                     }
-                    else if (account is AdminAccount admin)
+                    else if (choice == 2)
                     {
-                        DisplayAdminMenu(admin);
+                        Account account = authService.LoginUser();
+                        if (account is UserAccount user)
+                        {
+                            DisplayUserMenu(user);
+                        }
                     }
-                }
-                else if (choice == 3)
-                {
-                    Console.WriteLine("Exiting program. Goodbye!");
-                    break;
+                    else if (choice == 3)
+                    {
+                        Account admin = authService.LoginAdmin();
+                        if (admin is AdminAccount adminAccount)
+                        {
+                            DisplayAdminMenu(adminAccount);
+                        }
+                    }
+                    else if (choice == 4)
+                    {
+                        Console.WriteLine("Exiting program. Goodbye!");
+                        break;
+                    }
                 }
             }
-        }
 
-        /// <summary>
-        /// Displays the user dashboard menu.
-        /// </summary>
-        private void DisplayUserMenu(UserAccount user)
-        {
-            while (true)
+            /// <summary>
+            /// Displays the user dashboard menu.
+            /// </summary>
+            private void DisplayUserMenu(UserAccount user)
             {
-                Console.WriteLine("\n=== User Dashboard ===");
-                Console.WriteLine("1. View My Roadmap");
-                Console.WriteLine("2. Change Learning Path");
-                Console.WriteLine("3. Logout");
+                while (true)
+                {
+                    Console.WriteLine("\n=== User Dashboard ===");
+                    Console.WriteLine("1. Create My Roadmap");
+                    Console.WriteLine("2. View My Roadmap");
+                    Console.WriteLine("3. Change Learning Path");
+                    Console.WriteLine("4. Logout");
 
-                int choice = InputValidation.ValidateMenuSelection(1, 3);
+                    int choice = InputValidation.ValidateMenuSelection(1, 4);
 
-                if (choice == 1)
-                {
-                    RoadmapService.GetRoadmap(user.Language, user.Level).DisplayRoadmap();
-                }
-                else if (choice == 2)
-                {
-                    Console.WriteLine("Changing learning path...");
-                    user.UpdateLearningPreferences();
-                }
-                else if (choice == 3)
-                {
-                    Console.WriteLine("Logging out...");
-                    break;
+                    if (choice == 1)
+                    {
+                        Console.WriteLine("Let's create or find your roadmap...");
+                        user.UpdateLearningPreferences(); // ✅ Allows user to choose language & level
+                    }
+                    else if (choice == 2)
+                    {
+                        if (user.Language == Language.None || user.Level == Level.None)
+                        {
+                            Console.WriteLine("❌ No roadmap found! Please create one first.");
+                        }
+                        else
+                        {
+                            RoadmapService.GetRoadmap(user.Language, user.Level).DisplayRoadmap();
+                        }
+                    }
+                    else if (choice == 3)
+                    {
+                        Console.WriteLine("Updating your learning path...");
+                        user.UpdateLearningPreferences();
+                    }
+                    else if (choice == 4)
+                    {
+                        Console.WriteLine("Logging out...");
+                        break;
+                    }
                 }
             }
-        }
 
-        /// <summary>
-        /// Displays the admin dashboard menu.
-        /// </summary>
-        private void DisplayAdminMenu(AdminAccount admin)
-        {
-            while (true)
+            /// <summary>
+            /// Displays the admin dashboard menu.
+            /// </summary>
+            private void DisplayAdminMenu(AdminAccount admin)
             {
-                Console.WriteLine("\n=== Admin Panel ===");
-                Console.WriteLine("1. View All Users");
-                Console.WriteLine("2. Manage Users");
-                Console.WriteLine("3. Logout");
+                while (true)
+                {
+                    Console.WriteLine("\n=== Admin Panel ===");
+                    Console.WriteLine("1. View All Users");
+                    Console.WriteLine("2. Manage Users");
+                    Console.WriteLine("3. Logout");
 
-                int choice = InputValidation.ValidateMenuSelection(1, 3);
+                    int choice = InputValidation.ValidateMenuSelection(1, 3);
 
-                if (choice == 1)
-                {
-                    admin.ListUsers();
-                }
-                else if (choice == 2)
-                {
-                    admin.ManageUsers();
-                }
-                else if (choice == 3)
-                {
-                    Console.WriteLine("Logging out...");
-                    break;
+                    if (choice == 1)
+                    {
+                        admin.ListUsers();
+                    }
+                    else if (choice == 2)
+                    {
+                        admin.ManageUsers();
+                    }
+                    else if (choice == 3)
+                    {
+                        Console.WriteLine("Logging out...");
+                        break;
+                    }
                 }
             }
         }

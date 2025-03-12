@@ -3,22 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using System.Collections.Generic;
+using System.Collections;
+using TechLearningRoadmap.Models;
 
 namespace TechLearningRoadmap.Data
 {
     /// <summary>
-    /// Interface defining CRUD operations for data management.
-    /// Uses generics for flexibility in handling different data types.
+    /// Generic interface for managing user/admin accounts.
     /// </summary>
-    /// <typeparam name="T">Generic type representing stored entities.</typeparam>
-    public interface IDataManager<T>
+    public interface IDataManager<T> where T : Account
     {
+        /// <summary>
+        /// Inserts a new account into the system.
+        /// </summary>
         void Insert(T data);
+
+        /// <summary>
+        /// Deletes a user account based on username.
+        /// </summary>
         bool Delete(string username);
+
+        /// <summary>
+        /// Searches for a user account by username.
+        /// </summary>
         T Search(string username);
+
+        /// <summary>
+        /// Allows a user to update their password securely.
+        /// </summary>
         bool Edit(string username, string newPassword);
-        List<T> GetAll();
+
+        /// <summary>
+        /// Retrieves all registered accounts.
+        /// </summary>
+        ArrayList GetAll(); // ✅ Changed from List<T> to ArrayList
     }
 }

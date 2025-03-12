@@ -4,21 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechLearningRoadmap.Models;
+using System;
+using System.Collections;
+using System.Linq;
 
 namespace TechLearningRoadmap.Data
 {
     /// <summary>
-    /// Generic data manager handling storage and operations for user accounts.
-    /// Implements IDataManager<T> for structured CRUD operations.
+    /// Generic data manager for handling user and admin accounts.
     /// </summary>
-    /// <typeparam name="T">Generic type parameter (UserAccount, AdminAccount, etc.).</typeparam>
+    /// <typeparam name="T">Type parameter constrained to Account.</typeparam>
     public class DataManager<T> : IDataManager<T> where T : Account
     {
-        private List<T> accounts;
+        private ArrayList accounts; // ✅ Changed from List<T> to ArrayList
 
         public DataManager()
         {
-            accounts = new List<T>();
+            accounts = new ArrayList(); // ✅ Explicitly initialize ArrayList
         }
 
         /// <summary>
@@ -26,26 +28,46 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         public void Insert(T data)
         {
-            if (accounts.Any(a => a.Username == data.Username))
+            bool usernameExists = false;
+
+            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before looping
+            {
+                if (account.Username == data.Username)
+                {
+                    usernameExists = true;
+                    break;
+                }
+            }
+
+            if (usernameExists)
             {
                 Console.WriteLine("Error: Username already exists. Please choose a different username.");
                 return;
             }
 
             accounts.Add(data);
-            Console.WriteLine($"Account '{data.Username}' successfully registered.");
+            Console.WriteLine($"✅ Account '{data.Username}' successfully registered.");
         }
 
         /// <summary>
-        /// Deletes a user account based on the provided username.
+        /// Deletes a user account based on username.
         /// </summary>
         public bool Delete(string username)
         {
-            T accountToRemove = accounts.FirstOrDefault(a => a.Username == username);
+            T accountToRemove = null;
+
+            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before iterating
+            {
+                if (account.Username == username)
+                {
+                    accountToRemove = account;
+                    break;
+                }
+            }
 
             if (accountToRemove == null)
             {
-                Console.WriteLine("Error: User not found.");
+                Console.WriteLine("❌ Error: User not found.");
                 return false;
             }
 
@@ -55,12 +77,12 @@ namespace TechLearningRoadmap.Data
             if (confirmation == "yes")
             {
                 accounts.Remove(accountToRemove);
-                Console.WriteLine($"User '{username}' has been deleted.");
+                Console.WriteLine($"✅ User '{username}' has been deleted.");
                 return true;
             }
             else
             {
-                Console.WriteLine("Operation cancelled.");
+                Console.WriteLine("🚫 Operation cancelled.");
                 return false;
             }
         }
@@ -70,15 +92,16 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         public T Search(string username)
         {
-            T account = accounts.FirstOrDefault(a => a.Username == username);
-
-            if (account == null)
+            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before searching
             {
-                Console.WriteLine("User not found.");
-                return null;
+                if (account.Username == username)
+                {
+                    return account;
+                }
             }
 
-            return account;
+            Console.WriteLine("❌ User not found.");
+            return null;
         }
 
         /// <summary>
@@ -86,29 +109,38 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         public bool Edit(string username, string newPassword)
         {
-            T account = accounts.FirstOrDefault(a => a.Username == username);
+            T accountToEdit = null;
 
-            if (account == null)
+            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before iterating
             {
-                Console.WriteLine("Error: User not found.");
+                if (account.Username == username)
+                {
+                    accountToEdit = account;
+                    break;
+                }
+            }
+
+            if (accountToEdit == null)
+            {
+                Console.WriteLine("❌ Error: User not found.");
                 return false;
             }
 
             if (!ValidatePassword(newPassword))
             {
-                Console.WriteLine("Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
+                Console.WriteLine("❌ Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
                 return false;
             }
 
-            account.UpdatePassword(newPassword);
-            Console.WriteLine($"Password updated successfully for user '{username}'.");
+            accountToEdit.UpdatePassword(newPassword);
+            Console.WriteLine($"✅ Password updated successfully for user '{username}'.");
             return true;
         }
 
         /// <summary>
         /// Retrieves all registered accounts.
         /// </summary>
-        public List<T> GetAll()
+        public ArrayList GetAll() // ✅ Changed return type to ArrayList
         {
             return accounts;
         }
@@ -118,12 +150,43 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         private bool ValidatePassword(string password)
         {
-            return password.Length >= 8 &&
-                   password.Any(char.IsUpper) &&
-                   password.Any(char.IsLower) &&
-                   password.Any(char.IsDigit) &&
-                   password.Any(ch => !char.IsLetterOrDigit(ch));
+            bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+
+            foreach (char ch in password)
+            {
+                if (char.IsUpper(ch)) hasUpper = true;
+                else if (char.IsLower(ch)) hasLower = true;
+                else if (char.IsDigit(ch)) hasDigit = true;
+                else if (!char.IsLetterOrDigit(ch)) hasSpecial = true;
+            }
+
+            if (password.Length < 8)
+            {
+                Console.WriteLine("❌ Error: Password must be at least 8 characters long.");
+                return false;
+            }
+            if (!hasUpper)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one uppercase letter.");
+                return false;
+            }
+            if (!hasLower)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one lowercase letter.");
+                return false;
+            }
+            if (!hasDigit)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one digit.");
+                return false;
+            }
+            if (!hasSpecial)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one special character (@, #, !, $, etc.).");
+                return false;
+            }
+
+            return true;
         }
     }
 }
-

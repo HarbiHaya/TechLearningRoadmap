@@ -7,26 +7,47 @@ using System.Threading.Tasks;
 using System;
 using TechLearningRoadmap.Models;
 
+using System;
+using TechLearningRoadmap.Models;
+
 namespace TechLearningRoadmap.Services
 {
     /// <summary>
-    /// Service to fetch the correct roadmap based on user selection.
+    /// Manages learning roadmaps for different programming languages and levels.
     /// </summary>
     public class RoadmapService
     {
         /// <summary>
-        /// Retrieves the appropriate roadmap based on language and level.
+        /// Retrieves the appropriate LanguageLevel subclass based on user-selected language and level.
         /// </summary>
         public static LanguageLevel GetRoadmap(Language language, Level level)
         {
-            return language switch
+            if (language == Language.None || level == Level.None)
             {
-                Language.CSharp => new CSharpLevel(level),
-                Language.Java => new JavaLevel(level),
-                Language.Python => new PythonLevel(level),
-                _ => throw new ArgumentException("Invalid Language Selection.")
-            };
+                Console.WriteLine("❌ Error: You have not selected a learning roadmap. Please choose 'Create My Roadmap' first.");
+                return null;
+            }
+
+            if (language == Language.CSharp)
+            {
+                return new CSharpLevel(level);
+            }
+            else if (language == Language.Java)
+            {
+                return new JavaLevel(level);
+            }
+            else if (language == Language.Python)
+            {
+                return new PythonLevel(level);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid language selected.");
+            }
         }
+
     }
 }
+
+
 
