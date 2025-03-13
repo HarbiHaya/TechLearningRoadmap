@@ -1,6 +1,3 @@
-Here is a **comprehensive README** for your **Tech Learning Roadmap Console Application**, formatted **professionally** and structured for clarity.
-
----
 
 # **Tech Learning Roadmap Console Application**  
 
