@@ -7,9 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
-    /// Represents a base account class for both users and admins.
-    /// </summary>
+    /// Haya Alharbi 
     public abstract class Account
     {
         public string Username { get; private set; }
