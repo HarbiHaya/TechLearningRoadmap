@@ -1,14 +1,9 @@
-﻿using System;
-
+﻿
 using System;
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.Services;
 using TechLearningRoadmap.UI;
 
-using System;
-using TechLearningRoadmap.Services;
-
-using System;
 
 namespace TechLearningRoadmap.Models
 {
@@ -32,11 +27,28 @@ namespace TechLearningRoadmap.Models
         /// </summary>
         public override void DisplayInfo()
         {
-            string languageText = (Language == Language.None) ? "Not Set" : Language.ToString();
-            string levelText = (Level == Level.None) ? "Not Set" : Level.ToString();
+            string languageText;
+            if (Language == Language.None)
+            {
+                languageText = "Not Set";
+            }
+            else
+            {
+                languageText = Language.ToString();
+            }
 
-            Console.WriteLine($"User: {Username}");
-            Console.WriteLine($"Current Learning Path: {languageText} ({levelText})");
+            string levelText;
+            if (Level == Level.None)
+            {
+                levelText = "Not Set";
+            }
+            else
+            {
+                levelText = Level.ToString();
+            }
+
+            Console.WriteLine("User: " + Username);
+            Console.WriteLine("Current Learning Path: " + languageText + " (" + levelText + ")");
         }
 
         /// <summary>

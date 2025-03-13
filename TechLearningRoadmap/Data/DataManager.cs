@@ -7,6 +7,7 @@ using TechLearningRoadmap.Models;
 using System;
 using System.Collections;
 using System.Linq;
+using TechLearningRoadmap.UI;
 
 namespace TechLearningRoadmap.Data
 {
@@ -30,7 +31,7 @@ namespace TechLearningRoadmap.Data
         {
             bool usernameExists = false;
 
-            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before looping
+            foreach (T account in accounts.Cast<T>()) //  Cast ArrayList before looping
             {
                 if (account.Username == data.Username)
                 {
@@ -126,7 +127,7 @@ namespace TechLearningRoadmap.Data
                 return false;
             }
 
-            if (!ValidatePassword(newPassword))
+            if (!InputValidation.ValidatePassword(newPassword))
             {
                 Console.WriteLine("❌ Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
                 return false;
@@ -146,48 +147,5 @@ namespace TechLearningRoadmap.Data
         }
 
 
-        /// <summary>
-        /// Validates password security requirements.
-        /// </summary>
-        private bool ValidatePassword(string password)
-        {
-            bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
-
-            foreach (char ch in password)
-            {
-                if (char.IsUpper(ch)) hasUpper = true;
-                else if (char.IsLower(ch)) hasLower = true;
-                else if (char.IsDigit(ch)) hasDigit = true;
-                else if (!char.IsLetterOrDigit(ch)) hasSpecial = true;
-            }
-
-            if (password.Length < 8)
-            {
-                Console.WriteLine("❌ Error: Password must be at least 8 characters long.");
-                return false;
-            }
-            if (!hasUpper)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one uppercase letter.");
-                return false;
-            }
-            if (!hasLower)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one lowercase letter.");
-                return false;
-            }
-            if (!hasDigit)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one digit.");
-                return false;
-            }
-            if (!hasSpecial)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one special character (@, #, !, $, etc.).");
-                return false;
-            }
-
-            return true;
-        }
     }
 }

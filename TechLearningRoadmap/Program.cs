@@ -21,12 +21,15 @@ namespace TechLearningRoadmap
     {
         static void Main()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+
             // ✅ Ensure SINGLE instance of DataManager<T>
             DataManager<UserAccount> userManager = new DataManager<UserAccount>();
             DataManager<AdminAccount> adminManager = new DataManager<AdminAccount>();
 
             // ✅ Predefine Admin Accounts
-            AdminAccount admin = new AdminAccount("jana", "JanaA123@");
+            AdminAccount admin1 = new AdminAccount("jana", "JanaA123@");
             adminManager.Insert(admin1);
 
             AdminAccount admin2 = new AdminAccount("haya", "HayaA123@");

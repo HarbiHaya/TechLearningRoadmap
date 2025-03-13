@@ -120,7 +120,7 @@ namespace TechLearningRoadmap.Models
                     continue;
                 }
 
-                if (!ValidatePassword(password))
+                if (!InputValidation.ValidatePassword(password))
                 {
                     Console.WriteLine("❌ Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
                     continue;
@@ -165,48 +165,6 @@ namespace TechLearningRoadmap.Models
             Console.WriteLine($"✅ User '{usernameToRemove}' removed successfully.");
         }
 
-        /// <summary>
-        /// Validates password security requirements.
-        /// </summary>
-        private bool ValidatePassword(string password)
-        {
-            bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
 
-            foreach (char ch in password)
-            {
-                if (char.IsUpper(ch)) hasUpper = true;
-                else if (char.IsLower(ch)) hasLower = true;
-                else if (char.IsDigit(ch)) hasDigit = true;
-                else if (!char.IsLetterOrDigit(ch)) hasSpecial = true;
-            }
-
-            if (password.Length < 8)
-            {
-                Console.WriteLine("❌ Error: Password must be at least 8 characters long.");
-                return false;
-            }
-            if (!hasUpper)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one uppercase letter.");
-                return false;
-            }
-            if (!hasLower)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one lowercase letter.");
-                return false;
-            }
-            if (!hasDigit)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one digit.");
-                return false;
-            }
-            if (!hasSpecial)
-            {
-                Console.WriteLine("❌ Error: Password must contain at least one special character (@, #, !, $, etc.).");
-                return false;
-            }
-
-            return true;
-        }
     }
 }
