@@ -3,21 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
 
-using System;
-using System.Security.Cryptography;
-using System.Text;
-using System;
-using System.Security.Cryptography;
-using System.Text;
-
-using System;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace TechLearningRoadmap.Models
 {
@@ -66,16 +52,14 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// sets password
+        /// jana
        
         private void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
         }
 
-        /// <summary>
-        /// Hashes the password using SHA-256.
-        /// </summary>
+        /// jana 
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
