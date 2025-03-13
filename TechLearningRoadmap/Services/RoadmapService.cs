@@ -4,27 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System;
 using TechLearningRoadmap.Models;
 
-using System;
-using TechLearningRoadmap.Models;
+
 
 namespace TechLearningRoadmap.Services
 {
-    /// <summary>
-    /// Manages learning roadmaps for different programming languages and levels.
-    /// </summary>
+
+    // manages roadmaps for  programming languages and levels
+ 
     public class RoadmapService
     {
-        /// <summary>
-        /// Retrieves the appropriate LanguageLevel subclass based on user-selected language and level.
-        /// </summary>
+        
+        /// retrieves  appropriate LanguageLevel subclass based on selected language and level
         public static LanguageLevel GetRoadmap(Language language, Level level)
         {
             if (language == Language.None || level == Level.None)
             {
-                Console.WriteLine("❌ Error: You have not selected a learning roadmap. Please choose 'Create My Roadmap' first.");
+                Console.WriteLine("Error: You have not selected a learning roadmap. Please choose 'Create My Roadmap' first.");
                 return null;
             }
 

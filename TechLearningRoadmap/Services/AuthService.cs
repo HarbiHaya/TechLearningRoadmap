@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using System;
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI;
 
 namespace TechLearningRoadmap.Services
 {
-    /// <summary>
-    /// Manages user authentication and account registration.
-    /// </summary>
+    // manages authentication
     public class AuthService
     {
         private DataManager<UserAccount> userManager;
@@ -29,12 +25,12 @@ namespace TechLearningRoadmap.Services
         {
             string username = InputValidation.ValidateStringInput("Enter a username");
 
-            string password = InputValidation.GetValidatedPassword(); // Ensures password is valid
+            string password = InputValidation.GetValidatedPassword(); // ensures password is valid 
 
             UserAccount newUser = new UserAccount(username, password);
             userManager.Insert(newUser);
 
-            Console.WriteLine("✅ Registration successful! You can now log in.");
+            Console.WriteLine("Registration successful! You can now log in.");
         }
 
         public Account LoginUser()
@@ -46,12 +42,12 @@ namespace TechLearningRoadmap.Services
 
             if (user != null && user.Login(username, password))
             {
-                Console.WriteLine("✅ Login successful. Redirecting to user dashboard...");
+                Console.WriteLine("Login successful. Redirecting to user dashboard...");
                 return user;
             }
             else
             {
-                Console.WriteLine("❌ Invalid credentials. Please try again.");
+                Console.WriteLine("Invalid credentials. Please try again.");
                 return null;
             }
         }
@@ -65,12 +61,12 @@ namespace TechLearningRoadmap.Services
 
             if (admin != null && admin.Login(username, password))
             {
-                Console.WriteLine("✅ Admin login successful. Redirecting to admin panel...");
+                Console.WriteLine("Admin login successful. Redirecting to admin panel...");
                 return admin;
             }
             else
             {
-                Console.WriteLine("❌ Invalid credentials. Please try again.");
+                Console.WriteLine("ّnvalid credentials. Please try again.");
                 return null;
             }
         }
