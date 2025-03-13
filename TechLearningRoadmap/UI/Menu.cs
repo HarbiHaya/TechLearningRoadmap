@@ -139,11 +139,11 @@ namespace TechLearningRoadmap.UI
 
                     if (choice == 1)
                     {
-                        admin.ListUsers();
+                        admin.ListUsers(userManager); // ✅ Fix: Pass userManager
                     }
                     else if (choice == 2)
                     {
-                        admin.ManageUsers();
+                        admin.ManageUsers(userManager);
                     }
                     else if (choice == 3)
                     {

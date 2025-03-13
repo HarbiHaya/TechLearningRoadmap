@@ -9,7 +9,8 @@ using System.Collections.Generic;
 using TechLearningRoadmap.UI;
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
+using TechLearningRoadmap.Data;
 
 namespace TechLearningRoadmap.Models
 {
@@ -18,12 +19,7 @@ namespace TechLearningRoadmap.Models
     /// </summary>
     public class AdminAccount : Account
     {
-        private List<UserAccount> managedUsers; // ✅ List of managed users
-
-        public AdminAccount(string username, string password) : base(username, password)
-        {
-            managedUsers = new List<UserAccount>();
-        }
+        public AdminAccount(string username, string password) : base(username, password) { }
 
         /// <summary>
         /// Displays admin account details.
@@ -34,27 +30,32 @@ namespace TechLearningRoadmap.Models
         }
 
         /// <summary>
-        /// Lists all users managed by the admin.
+        /// Lists all registered users in the system.
         /// </summary>
-        public void ListUsers()
+        public void ListUsers(DataManager<UserAccount> userManager)
         {
-            if (managedUsers.Count == 0)
+            ArrayList allUsers = userManager.GetAll();
+
+            if (allUsers.Count == 0)
             {
                 Console.WriteLine("⚠ No users registered.");
                 return;
             }
 
             Console.WriteLine("\n=== 📋 Registered Users ===");
-            foreach (var user in managedUsers)
+            foreach (object obj in allUsers)
             {
-                Console.WriteLine($"🔹 {user.Username} | Learning: {user.Language} ({user.Level})");
+                if (obj is UserAccount user)
+                {
+                    Console.WriteLine($"🔹 {user.Username} | Learning: {user.Language} ({user.Level})");
+                }
             }
         }
 
         /// <summary>
         /// Allows the admin to manage users (Add/Remove).
         /// </summary>
-        public void ManageUsers()
+        public void ManageUsers(DataManager<UserAccount> userManager)
         {
             while (true)
             {
@@ -67,11 +68,11 @@ namespace TechLearningRoadmap.Models
 
                 if (choice == 1)
                 {
-                    AddUser();
+                    AddUser(userManager);
                 }
                 else if (choice == 2)
                 {
-                    RemoveUser();
+                    RemoveUser(userManager);
                 }
                 else if (choice == 3)
                 {
@@ -84,33 +85,75 @@ namespace TechLearningRoadmap.Models
         /// <summary>
         /// Handles adding a new user.
         /// </summary>
-        private void AddUser()
+        private void AddUser(DataManager<UserAccount> userManager)
         {
-            Console.Write("👤 Enter username for new user: ");
-            string username = Console.ReadLine()?.Trim();
-            Console.Write(" Enter password: ");
-            string password = Console.ReadLine()?.Trim();
+            string username, password;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            while (true)
             {
-                Console.WriteLine("❌ Error: Username and password cannot be empty.");
-                return;
+                Console.Write("👤 Enter username for new user: ");
+                username = Console.ReadLine()?.Trim();
+
+                if (string.IsNullOrEmpty(username))
+                {
+                    Console.WriteLine("❌ Error: Username cannot be empty. Please enter a valid username.");
+                    continue;
+                }
+
+                if (userManager.Search(username) != null)
+                {
+                    Console.WriteLine("❌ Error: Username already exists. Choose a different one.");
+                    continue;
+                }
+
+                break;
             }
 
+            while (true)
+            {
+                Console.Write("🔑 Enter password: ");
+                password = Console.ReadLine()?.Trim();
+
+                if (string.IsNullOrEmpty(password))
+                {
+                    Console.WriteLine("❌ Error: Password cannot be empty. Please enter a valid password.");
+                    continue;
+                }
+
+                if (!ValidatePassword(password))
+                {
+                    Console.WriteLine("❌ Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
+                    continue;
+                }
+
+                break;
+            }
+
+            // ✅ Create and add user
             UserAccount newUser = new UserAccount(username, password);
-            managedUsers.Add(newUser);
+            userManager.Insert(newUser);
             Console.WriteLine($"✅ User '{username}' added successfully.");
         }
 
         /// <summary>
         /// Handles removing a user.
         /// </summary>
-        private void RemoveUser()
+        private void RemoveUser(DataManager<UserAccount> userManager)
         {
             Console.Write("🗑 Enter the username to remove: ");
             string usernameToRemove = Console.ReadLine()?.Trim();
 
-            UserAccount userToRemove = managedUsers.Find(u => u.Username == usernameToRemove);
+            ArrayList allUsers = userManager.GetAll();
+            UserAccount userToRemove = null;
+
+            foreach (object obj in allUsers)
+            {
+                if (obj is UserAccount user && user.Username.Equals(usernameToRemove, StringComparison.OrdinalIgnoreCase))
+                {
+                    userToRemove = user;
+                    break;
+                }
+            }
 
             if (userToRemove == null)
             {
@@ -118,8 +161,52 @@ namespace TechLearningRoadmap.Models
                 return;
             }
 
-            managedUsers.Remove(userToRemove);
+            userManager.Delete(usernameToRemove);
             Console.WriteLine($"✅ User '{usernameToRemove}' removed successfully.");
+        }
+
+        /// <summary>
+        /// Validates password security requirements.
+        /// </summary>
+        private bool ValidatePassword(string password)
+        {
+            bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+
+            foreach (char ch in password)
+            {
+                if (char.IsUpper(ch)) hasUpper = true;
+                else if (char.IsLower(ch)) hasLower = true;
+                else if (char.IsDigit(ch)) hasDigit = true;
+                else if (!char.IsLetterOrDigit(ch)) hasSpecial = true;
+            }
+
+            if (password.Length < 8)
+            {
+                Console.WriteLine("❌ Error: Password must be at least 8 characters long.");
+                return false;
+            }
+            if (!hasUpper)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one uppercase letter.");
+                return false;
+            }
+            if (!hasLower)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one lowercase letter.");
+                return false;
+            }
+            if (!hasDigit)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one digit.");
+                return false;
+            }
+            if (!hasSpecial)
+            {
+                Console.WriteLine("❌ Error: Password must contain at least one special character (@, #, !, $, etc.).");
+                return false;
+            }
+
+            return true;
         }
     }
 }

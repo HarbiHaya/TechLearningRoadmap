@@ -140,10 +140,11 @@ namespace TechLearningRoadmap.Data
         /// <summary>
         /// Retrieves all registered accounts.
         /// </summary>
-        public ArrayList GetAll() // ✅ Changed return type to ArrayList
+        public ArrayList GetAll()
         {
-            return accounts;
+            return accounts; // ✅ Always returns the shared `ArrayList`
         }
+
 
         /// <summary>
         /// Validates password security requirements.
