@@ -3,37 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using System;
-
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+// Haya Alharbi
+// 2035768
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.UI
 {
     public static class InputValidation
     {
-        /// <summary>
-        /// Ensures numeric input falls within a specified menu selection range.
-        /// </summary
-        public static int ValidateMenuSelection(int min, int max)
+        
+      
+        public static int ValidateMenuSelection(int min, int max) // this method is to ensure the input between the min and max for each menu we have 
         {
-            int choice = min; // Default value to avoid compile error 
+            int choice = min; // to avoid compile error 
             bool valid = false;
 
             do
             {
                 Console.Write("Enter your choice: ");
-                string input = Console.ReadLine()?.Trim();
+                string input = Console.ReadLine()?.Trim(); // to remove any white space
 
                 try
                 {
-                    choice = int.Parse(input);
+                    choice = int.Parse(input); //to convert the input to integer
 
                     if (choice < min || choice > max)
                     {
@@ -42,13 +36,13 @@ namespace TechLearningRoadmap.UI
 
                     valid = true;
                 }
-                catch (FormatException)
+                catch (FormatException) // if the input is not a number 
                 {
-                    Console.WriteLine("❌ Error: Invalid format. Please enter a number.");
+                    Console.WriteLine("Error: Invalid format. Please enter a number.");
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    Console.WriteLine($"❌ Error: Choice must be between {min} and {max}.");
+                    Console.WriteLine($"Error: Choice must be between {min} and {max}.");
                 }
 
             } while (!valid);
@@ -56,11 +50,7 @@ namespace TechLearningRoadmap.UI
             return choice;
         }
 
-
-        /// <summary>
-        /// Ensures user input is a non-empty string.
-        /// </summary>
-        public static string ValidateStringInput(string prompt)
+        public static string ValidateStringInput(string prompt) // this method is to ensure that input is not null
         {
             string input;
             do
@@ -78,9 +68,9 @@ namespace TechLearningRoadmap.UI
             return input;
         }
 
-        /// <summary>
-        /// Captures password input securely, masking it with '*'.
-        /// </summary>
+        // this method is to hide the password while typing it
+        // was taken and modified from https://stackoverflow.com/questions/3404421/password-masking-console-application
+
         public static string GetHiddenPassword(string prompt)
         {
             Console.Write($"{prompt}: ");
@@ -111,20 +101,20 @@ namespace TechLearningRoadmap.UI
             return password;
         }
 
-        /// <summary>
-        /// Ensures the password meets security standards.
-        /// </summary>
+        
+        // to ensure that password meets requirements
+        
         public static bool ValidatePassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                Console.WriteLine(" Error: Password cannot be empty.");
+                Console.WriteLine("Error: Password cannot be empty.");
                 return false;
             }
 
             if (password.Length < 8)
             {
-                Console.WriteLine(" Error: Password must be at least 8 characters long.");
+                Console.WriteLine("Error: Password must be at least 8 characters long.");
                 return false;
             }
 
@@ -142,11 +132,11 @@ namespace TechLearningRoadmap.UI
 
             if (!password.Any(char.IsDigit))
             {
-                Console.WriteLine(" Error: Password must contain at least one number.");
+                Console.WriteLine("Error: Password must contain at least one number.");
                 return false;
             }
 
-            if (!Regex.IsMatch(password, @"[\W_]"))
+            if (!Regex.IsMatch(password, @"[\W_]")) // to check if the password contains any special character
             {
                 Console.WriteLine(" Error: Password must contain at least one special character.");
                 return false;
@@ -155,17 +145,15 @@ namespace TechLearningRoadmap.UI
             return true;
         }
 
-        /// <summary>
-        /// Captures and validates a password.
-        /// </summary>
-        public static string GetValidatedPassword()
+        
+        public static string GetValidatedPassword() // gets the validated password
         {
             string password;
 
             do
             {
-                password = GetHiddenPassword("Enter a secure password");
-            } while (!InputValidation.ValidatePassword(password));
+                password = GetHiddenPassword("Enter a password"); 
+            } while (!InputValidation.ValidatePassword(password)); 
 
             return password;
         }
