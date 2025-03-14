@@ -28,16 +28,16 @@ namespace TechLearningRoadmap.Models
 
             if (allUsers.Count == 0)
             {
-                Console.WriteLine("⚠ No users registered.");
+                Console.WriteLine(" No users registered.");
                 return;
             }
 
-            Console.WriteLine("\n=== 📋 Registered Users ===");
+            Console.WriteLine("\n===  Registered Users ===");
             foreach (object obj in allUsers)
             {
                 if (obj is UserAccount user)
                 {
-                    Console.WriteLine($"🔹 {user.Username} | Learning: {user.Language} ({user.Level})");
+                    Console.WriteLine($" {user.Username} | Learning: {user.Language} ({user.Level})");
                 }
             }
         }
