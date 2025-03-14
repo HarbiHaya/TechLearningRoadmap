@@ -12,7 +12,7 @@ namespace TechLearningRoadmap.UI
 {
     /// <summary>
     /// Manages the main menu and user interactions.
-    /// </summary>
+    /// </summary
     using System;
 
 

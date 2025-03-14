@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,36 +7,68 @@ using System.Text.RegularExpressions;
 
 namespace TechLearningRoadmap.Models
 {
+
     /// create  a new class 
     public abstract class Account
     {
-        public string Username { get; private set; }
-        public string PasswordHash { get; private set; }
+        private string username;
+        private string password;
+
+        public string Username
+        {
+
+            get
+            {
+                return username;
+            }
+            set
+            {
+                username = value;
+            }
+
+        }
+        public string PasswordHash
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
+            }
+        }
 
         public Account(string username, string password)
         {
             Username = username;
-            SetPassword(password); // Ensure password is always hashed at creation
+            SetPassword(password); // Ensure  that password is always hashed at creation
         }
 
-        /// <summary>
-        /// Updates the password securely.
-        /// </summary>
+        /// Method for updating password 
         public void UpdatePassword(string newPassword)
         {
-            if (string.IsNullOrWhiteSpace(newPassword))
+            try
             {
-                Console.WriteLine(" Error: Password cannot be empty.");
-                return;
-            }
+                if (string.IsNullOrWhiteSpace(newPassword))
+                {
+                    throw new ArgumentException("Password cannot be empty.");
+                }
 
-            SetPassword(newPassword);
-            Console.WriteLine(" Password has been updated successfully.");
+                SetPassword(newPassword);
+                Console.WriteLine("Password has been updated successfully.");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Error: Password cannot be empty.");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An unexpected error occurred.");
+            }
         }
 
-        /// <summary>
-        /// Verifies user login by checking the password hash.
-        /// </summary>
+        /// logging in method 
         public bool Login(string username, string password)
         {
             if (Username == username && PasswordHash == HashPassword(password))
@@ -45,19 +77,19 @@ namespace TechLearningRoadmap.Models
             }
             else
             {
-                Console.WriteLine("❌ Error: Invalid username or password.");
+                Console.WriteLine("Error: Invalid username or password.");
                 return false;
             }
         }
 
-        /// jana
-       
+        /// Method for setting password 
+
         private void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
         }
 
-        /// jana 
+        /// making sure that password is hashed 
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -74,9 +106,7 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// <summary>
-        /// Displays account information (Implemented in derived classes).
-        /// </summary>
+        /// Create an abstract DisplayInfo method 
         public abstract void DisplayInfo();
     }
 }

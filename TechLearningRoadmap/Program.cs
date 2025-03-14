@@ -1,12 +1,10 @@
-﻿using System;
-using TechLearningRoadmap.Models;
-
 using System;
+using TechLearningRoadmap.Models;
 using TechLearningRoadmap.UI;
- using TechLearningRoadmap.Services;
+using TechLearningRoadmap.Services;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI.TechLearningRoadmap.UI;
-using System;
+
 
 
 namespace TechLearningRoadmap
@@ -18,6 +16,7 @@ namespace TechLearningRoadmap
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 
 
             // Ensure SINGLE instance of DataManager<T>
@@ -42,6 +41,7 @@ namespace TechLearningRoadmap
 
             UserAccount user2 = new UserAccount("user2", "User123@");
             userManager.Insert(user2);  
+
 
 
             //Create Services

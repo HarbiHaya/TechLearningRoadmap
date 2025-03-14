@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TechLearningRoadmap.Models
 {
     /// <summary>
-    /// Represents the Python learning roadmap.
+    /// Represents the Python learning roadmap
     /// </summary>
     public class PythonLevel : LanguageLevel
     {

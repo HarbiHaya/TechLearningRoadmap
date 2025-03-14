@@ -12,7 +12,7 @@ using TechLearningRoadmap.UI;
 namespace TechLearningRoadmap.Data
 {
     /// <summary>
-    /// Generic data manager for handling user and admin accounts.
+    /// Generic data manager for handling user and admin accounts
     /// </summary>
     /// <typeparam name="T">Type parameter constrained to Account.</typeparam>
     public class DataManager<T> : IDataManager<T> where T : Account

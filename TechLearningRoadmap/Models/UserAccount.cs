@@ -7,9 +7,7 @@ using TechLearningRoadmap.UI;
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
-    /// Represents a standard user account in the system.
-    /// </summary>
+    /// creating a UserAccount class that inherits from Account class
     public class UserAccount : Account
     {
         public Language Language { get; private set; }

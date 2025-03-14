@@ -9,7 +9,7 @@ using TechLearningRoadmap.UI;
 
 namespace TechLearningRoadmap.Services
 {
-    // manages authentication
+    // manages authentication.
     public class AuthService
     {
         private DataManager<UserAccount> userManager;

@@ -14,7 +14,7 @@ namespace TechLearningRoadmap.Models
         public JavaLevel(Level level) : base(Language.Java, level) { }
 
         /// <summary>
-        /// Assigns learning resources specific to Java.
+        /// Assigns learning resources specific to Java
         /// </summary>
         protected override void AssignRoadmap()
         {

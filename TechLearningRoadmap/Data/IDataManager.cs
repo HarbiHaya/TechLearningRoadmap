@@ -9,13 +9,13 @@ using TechLearningRoadmap.Models;
 namespace TechLearningRoadmap.Data
 {
     /// <summary>
-    /// Generic interface for managing user/admin accounts.
+    /// Generic interface for managing user/admin accounts
     /// </summary>
     public interface IDataManager<T> where T : Account
     {
         /// <summary>
         /// Inserts a new account into the system.
-        /// </summary>
+        /// </summary
         void Insert(T data);
 
         /// <summary>

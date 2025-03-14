@@ -8,7 +8,7 @@ namespace TechLearningRoadmap.Models
 {
     /// <summary>
     /// Represents available programming languages.
-    /// </summary>
+    /// </summary
     public enum Language
     {
         None,  // ✅ Default value when the user hasn't selected a language
