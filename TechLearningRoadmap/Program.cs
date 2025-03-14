@@ -24,7 +24,7 @@ namespace TechLearningRoadmap
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 
-            // ✅ Ensure SINGLE instance of DataManager<T>
+            //  Ensure SINGLE instance of DataManager<T>
             DataManager<UserAccount> userManager = new DataManager<UserAccount>();
             DataManager<AdminAccount> adminManager = new DataManager<AdminAccount>();
 
@@ -48,7 +48,7 @@ namespace TechLearningRoadmap
             userManager.Insert(user2);  
 
 
-            // ✅ Create Services
+            //  Create Services
             AuthService authService = new AuthService(userManager, adminManager);
             RoadmapService roadmapService = new RoadmapService();
             Menu menu = new Menu(authService, roadmapService, userManager, adminManager);

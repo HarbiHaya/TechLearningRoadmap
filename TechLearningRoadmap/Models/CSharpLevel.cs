@@ -14,7 +14,7 @@ namespace TechLearningRoadmap.Models
         public CSharpLevel(Level level) : base(Language.CSharp, level) { }
 
         /// <summary>
-        /// Assigns learning resources specific to C#.
+        /// Assigns learning resources specific to C#
         /// </summary>
         protected override void AssignRoadmap()
         {

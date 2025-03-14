@@ -20,7 +20,7 @@ namespace TechLearningRoadmap.UI
     {
         /// <summary>
         /// Ensures numeric input falls within a specified menu selection range.
-        /// </summary>
+        /// </summary
         public static int ValidateMenuSelection(int min, int max)
         {
             int choice = min; // Default value to avoid compile error 

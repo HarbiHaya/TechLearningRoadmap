@@ -7,16 +7,39 @@ using System.Text.RegularExpressions;
 
 namespace TechLearningRoadmap.Models
 {
-    /// Haya Alharbi 
+    /// create  an abstract classs 
     public abstract class Account
     {
-        public string Username { get; private set; }
-        public string PasswordHash { get; private set; }
+        private string username;
+        private string password;
+
+        public string Username {
+
+            get
+            {
+                return username;
+            }
+            set
+            {
+                username = value;
+            }
+
+        }
+        public string PasswordHash { 
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
+            }
+        }
 
         public Account(string username, string password)
         {
             Username = username;
-            SetPassword(password); // Ensure password is always hashed at creation
+            SetPassword(password); // Ensure  that password is always hashed at creation
         }
 
         /// <summary>
