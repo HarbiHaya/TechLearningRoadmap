@@ -105,9 +105,7 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// <summary>
-        /// Displays account information (Implemented in derived classes).
-        /// </summary>
+        /// Create an abstract DisplayInfo method 
         public abstract void DisplayInfo();
     }
 }
