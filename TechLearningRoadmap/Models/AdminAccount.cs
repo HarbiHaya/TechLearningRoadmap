@@ -144,7 +144,7 @@ namespace TechLearningRoadmap.Models
 
 
 
-        /// Mthod Removing users 
+        /// Method Removing users 
         private void RemoveUser(DataManager<UserAccount> userManager)
         {
             Console.Write(" Enter the username to remove: ");

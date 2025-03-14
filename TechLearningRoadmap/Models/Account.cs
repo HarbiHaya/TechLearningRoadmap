@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace TechLearningRoadmap.Models
 {
 
-    /// create  a new class 
+    /// create  a new class
     public abstract class Account
     {
         private string username;

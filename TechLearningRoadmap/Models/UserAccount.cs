@@ -15,14 +15,12 @@ namespace TechLearningRoadmap.Models
 
         public UserAccount(string username, string password) : base(username, password)
         {
-            // Default values indicating no roadmap assigned yet
+            // Default values 
             Language = Language.None;
             Level = Level.None;
         }
 
-        /// <summary>
-        /// Displays user account details.
-        /// </summary>
+        /// overridden method from parent class 
         public override void DisplayInfo()
         {
             string languageText;
@@ -49,9 +47,7 @@ namespace TechLearningRoadmap.Models
             Console.WriteLine("Current Learning Path: " + languageText + " (" + levelText + ")");
         }
 
-        /// <summary>
-        /// Allows the user to update or create their learning preferences.
-        /// </summary>
+        /// Method for updating users Learning Preferences
         public void UpdateLearningPreferences()
         {
             Console.WriteLine("Choose a programming language:");
