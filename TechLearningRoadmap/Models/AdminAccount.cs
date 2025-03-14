@@ -15,13 +15,15 @@ namespace TechLearningRoadmap.Models
     {
         public AdminAccount(string username, string password) : base(username, password) { }
 
+
+
         ///Method implemented from parent class 
         public override void DisplayInfo()
         {
             Console.WriteLine($" Admin: {Username} (Has Management Privileges)");
         }
 
-        /// 
+      
         public void ListUsers(DataManager<UserAccount> userManager)
         {
             ArrayList allUsers = userManager.GetAll();
@@ -70,10 +72,13 @@ namespace TechLearningRoadmap.Models
             }
         }
 
+
+        /// Method for adding users 
         
         private void AddUser(DataManager<UserAccount> userManager)
         {
-            string username, password;
+            string username;
+               string password= "  ";
 
             while (true)
             {
@@ -97,29 +102,47 @@ namespace TechLearningRoadmap.Models
 
             while (true)
             {
-                Console.Write(" Enter password: ");
-                password = Console.ReadLine().Trim();
-
-                if (string.IsNullOrEmpty(password))
+                try
                 {
-                    Console.WriteLine(" Error: Password cannot be empty. Please enter a valid password.");
-                    continue;
-                }
+                    Console.Write("Enter password: ");
+                    string passwordd = Console.ReadLine().Trim();
 
-                if (!InputValidation.ValidatePassword(password))
+                    if (string.IsNullOrEmpty(passwordd))
+                    {
+                        throw new ArgumentException("Password cannot be empty. Please enter a valid password.");
+                    }
+
+                    if (!InputValidation.ValidatePassword(passwordd))
+                    {
+                        throw new FormatException("Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
+                    }
+
+                    Console.WriteLine("Password accepted.");
+                    break;
+                }
+                catch (ArgumentException ex)
                 {
-                    Console.WriteLine(" Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
-                    continue;
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
-
-                break;
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                }
             }
+
+
 
             //  Create and add user
             UserAccount newUser = new UserAccount(username, password);
             userManager.Insert(newUser);
             Console.WriteLine($" User '{username}' added successfully.");
         }
+
+
 
         /// Mthod Removing users 
         private void RemoveUser(DataManager<UserAccount> userManager)
