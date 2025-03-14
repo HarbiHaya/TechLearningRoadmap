@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI;
+using System.Collections;
 
 // Haya Alharbi
 // 2035768
@@ -19,11 +20,23 @@ namespace TechLearningRoadmap.Services
     {
         private DataManager<UserAccount> userManager;
         private DataManager<AdminAccount> adminManager;
+        private static ArrayList registeredUsernames = new ArrayList(); // stores registered usernames for easier search
+
 
         public AuthService(DataManager<UserAccount> userManager, DataManager<AdminAccount> adminManager)
         {
             this.userManager = userManager;
             this.adminManager = adminManager;
+
+            // to load the registered usernames list with all registered usernames when called
+            foreach (var user in userManager.GetAll().Cast<UserAccount>())
+            {
+                registeredUsernames.Add(user.Username);
+            }
+            foreach (var admin in adminManager.GetAll().Cast<AdminAccount>())
+            {
+                registeredUsernames.Add(admin.Username);
+            }
         }
 
         public void RegisterUser()

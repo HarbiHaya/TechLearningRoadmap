@@ -17,11 +17,14 @@ namespace TechLearningRoadmap.Data
     /// <typeparam name="T">Type parameter constrained to Account.</typeparam>
     public class DataManager<T> : IDataManager<T> where T : Account
     {
-        private ArrayList accounts; // ✅ Changed from List<T> to ArrayList
+        private List<T> accounts;
+        private static ArrayList registeredUsernames = new ArrayList(); // ✅ Stores usernames separately
+
+
 
         public DataManager()
         {
-            accounts = new ArrayList(); // ✅ Explicitly initialize ArrayList
+            accounts = new List<T>();
         }
 
         /// <summary>
@@ -29,25 +32,15 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         public void Insert(T data)
         {
-            bool usernameExists = false;
-
-            foreach (T account in accounts.Cast<T>()) //  Cast ArrayList before looping
-            {
-                if (account.Username == data.Username)
-                {
-                    usernameExists = true;
-                    break;
-                }
-            }
-
-            if (usernameExists)
+            if (registeredUsernames.Contains(data.Username)) // ✅ Check username in ArrayList
             {
                 Console.WriteLine("Error: Username already exists. Please choose a different username.");
                 return;
             }
 
-            accounts.Add(data);
-            Console.WriteLine($"✅ Account '{data.Username}' successfully registered.");
+            accounts.Add(data); // ✅ Add account object to List<T>
+            registeredUsernames.Add(data.Username); // ✅ Track username in ArrayList
+            Console.WriteLine($"Account '{data.Username}' successfully registered.");
         }
 
         /// <summary>
@@ -57,33 +50,36 @@ namespace TechLearningRoadmap.Data
         {
             T accountToRemove = null;
 
-            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before iterating
+            // Iterate through the list to find the matching account
+            foreach (T account in accounts)
             {
                 if (account.Username == username)
                 {
                     accountToRemove = account;
-                    break;
+                    break; // Stop searching after the first match
                 }
             }
 
+            // If no matching account is found, return an error
             if (accountToRemove == null)
             {
-                Console.WriteLine("❌ Error: User not found.");
+                Console.WriteLine("Error: User not found.");
                 return false;
             }
 
+            // Ask for confirmation before deleting
             Console.Write($"Are you sure you want to delete '{username}'? (yes/no): ");
             string confirmation = Console.ReadLine()?.Trim().ToLower();
 
             if (confirmation == "yes")
             {
-                accounts.Remove(accountToRemove);
-                Console.WriteLine($"✅ User '{username}' has been deleted.");
+                accounts.Remove(accountToRemove); // Remove from the list
+                Console.WriteLine($"User '{username}' has been deleted.");
                 return true;
             }
             else
             {
-                Console.WriteLine("🚫 Operation cancelled.");
+                Console.WriteLine("Operation cancelled.");
                 return false;
             }
         }
@@ -93,17 +89,19 @@ namespace TechLearningRoadmap.Data
         /// </summary>
         public T Search(string username)
         {
-            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before searching
+            // Iterate through the list to find the matching account
+            foreach (T account in accounts)
             {
                 if (account.Username == username)
                 {
-                    return account;
+                    return account; // Return the first matching account
                 }
             }
 
-            Console.WriteLine("❌ User not found.");
-            return null;
+            Console.WriteLine("User not found.");
+            return null; // Return null if no match is found
         }
+
 
         /// <summary>
         /// Allows a user to update their password securely.
@@ -112,36 +110,39 @@ namespace TechLearningRoadmap.Data
         {
             T accountToEdit = null;
 
-            foreach (T account in accounts.Cast<T>()) // ✅ Cast ArrayList before iterating
+            // Iterate through the list to find the matching account
+            foreach (T account in accounts)
             {
                 if (account.Username == username)
                 {
                     accountToEdit = account;
-                    break;
+                    break; // Stop searching after finding the first match
                 }
             }
 
+            // If no matching account is found, return an error
             if (accountToEdit == null)
             {
-                Console.WriteLine("❌ Error: User not found.");
+                Console.WriteLine("Error: User not found.");
                 return false;
             }
 
+            // Validate the new password
             if (!InputValidation.ValidatePassword(newPassword))
             {
-                Console.WriteLine("❌ Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
+                Console.WriteLine("Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
                 return false;
             }
 
+            // Update the password
             accountToEdit.UpdatePassword(newPassword);
-            Console.WriteLine($"✅ Password updated successfully for user '{username}'.");
+            Console.WriteLine($"Password updated successfully for user '{username}'.");
             return true;
         }
 
-        /// <summary>
+
         /// Retrieves all registered accounts.
-        /// </summary>
-        public ArrayList GetAll()
+        public List<T> GetAll()
         {
             return accounts; // ✅ Always returns the shared `ArrayList`
         }
