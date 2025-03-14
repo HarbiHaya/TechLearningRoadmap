@@ -13,7 +13,8 @@ namespace TechLearningRoadmap.Models
         private string username;
         private string password;
 
-        public string Username {
+        public string Username
+        {
 
             get
             {
@@ -25,7 +26,8 @@ namespace TechLearningRoadmap.Models
             }
 
         }
-        public string PasswordHash { 
+        public string PasswordHash
+        {
             get
             {
                 return password;
@@ -42,24 +44,30 @@ namespace TechLearningRoadmap.Models
             SetPassword(password); // Ensure  that password is always hashed at creation
         }
 
-        /// <summary>
-        /// Updates the password securely.
-        /// </summary>
+        /// Method for updating password 
         public void UpdatePassword(string newPassword)
         {
-            if (string.IsNullOrWhiteSpace(newPassword))
+            try
             {
-                Console.WriteLine(" Error: Password cannot be empty.");
-                return;
-            }
+                if (string.IsNullOrWhiteSpace(newPassword))
+                {
+                    throw new ArgumentException("Password cannot be empty.");
+                }
 
-            SetPassword(newPassword);
-            Console.WriteLine(" Password has been updated successfully.");
+                SetPassword(newPassword);
+                Console.WriteLine("Password has been updated successfully.");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Error: Password cannot be empty.");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An unexpected error occurred.");
+            }
         }
 
-        /// <summary>
-        /// Verifies user login by checking the password hash.
-        /// </summary>
+        /// logging in method 
         public bool Login(string username, string password)
         {
             if (Username == username && PasswordHash == HashPassword(password))
@@ -73,14 +81,14 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// jana
-       
+        /// Method for setting password 
+
         private void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
         }
 
-        /// jana 
+        /// making sure that password is hashed 
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
