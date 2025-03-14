@@ -136,7 +136,7 @@ namespace TechLearningRoadmap.Models
 
 
 
-            //  Create and add user
+            //  Create and add users
             UserAccount newUser = new UserAccount(username, password);
             userManager.Insert(newUser);
             Console.WriteLine($" User '{username}' added successfully.");
