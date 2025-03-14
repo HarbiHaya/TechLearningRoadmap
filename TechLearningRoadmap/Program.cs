@@ -1,21 +1,15 @@
-﻿using System;
-using TechLearningRoadmap.Models;
-
 using System;
+using TechLearningRoadmap.Models;
 using TechLearningRoadmap.UI;
- using TechLearningRoadmap.Services;
+using TechLearningRoadmap.Services;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI.TechLearningRoadmap.UI;
-using System;
+
 
 
 namespace TechLearningRoadmap
 {
-    using System;
-    using TechLearningRoadmap.Data;
-    using TechLearningRoadmap.Models;
-    using TechLearningRoadmap.Services;
-    using TechLearningRoadmap.UI;
+  
 
     class Program
     {
@@ -24,11 +18,12 @@ namespace TechLearningRoadmap
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 
-            //  Ensure SINGLE instance of DataManager<T>
+
+            // Ensure SINGLE instance of DataManager<T>
             DataManager<UserAccount> userManager = new DataManager<UserAccount>();
             DataManager<AdminAccount> adminManager = new DataManager<AdminAccount>();
 
-            // ✅ Predefine Admin Accounts
+            //Predefine Admin Accounts
             AdminAccount admin1 = new AdminAccount("jana", "JanaA123@");
             adminManager.Insert(admin1);
 
@@ -48,12 +43,13 @@ namespace TechLearningRoadmap
             userManager.Insert(user2);  
 
 
-            //  Create Services
+
+            //Create Services
             AuthService authService = new AuthService(userManager, adminManager);
             RoadmapService roadmapService = new RoadmapService();
             Menu menu = new Menu(authService, roadmapService, userManager, adminManager);
 
-            // ✅ Run the Program
+            //Run the Program
             menu.DisplayMenu();
         }
     }

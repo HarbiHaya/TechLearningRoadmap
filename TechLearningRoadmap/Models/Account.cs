@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,7 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace TechLearningRoadmap.Models
 {
-    /// create  an abstract class 
+
+    /// create  a new class 
     public abstract class Account
     {
         private string username;
@@ -76,7 +77,7 @@ namespace TechLearningRoadmap.Models
             }
             else
             {
-                Console.WriteLine("❌ Error: Invalid username or password.");
+                Console.WriteLine("Error: Invalid username or password.");
                 return false;
             }
         }
