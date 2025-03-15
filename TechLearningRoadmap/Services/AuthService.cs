@@ -28,27 +28,39 @@ namespace TechLearningRoadmap.Services
             this.userManager = userManager;
             this.adminManager = adminManager;
 
-            // to load the registered usernames list with all registered usernames when called
-            foreach (var user in userManager.GetAll().Cast<UserAccount>())
+            // Load registered usernames from user accounts
+            List<UserAccount> users = userManager.GetAll();
+            foreach (UserAccount user in users)
             {
                 registeredUsernames.Add(user.Username);
             }
-            foreach (var admin in adminManager.GetAll().Cast<AdminAccount>())
+
+            // Load registered usernames from admin accounts
+            List<AdminAccount> admins = adminManager.GetAll();
+            foreach (AdminAccount admin in admins)
             {
                 registeredUsernames.Add(admin.Username);
             }
         }
 
+        
+
         public void RegisterUser()
         {
-            string username = InputValidation.ValidateStringInput("Enter a username"); // ensures username is valid using the static method validate password in the input validation class
-            string password = InputValidation.GetValidatedPassword(); // ensures password is valid using the static method validate password in the input validation class
+            string username = InputValidation.ValidateStringInput("Enter a username");
+            if (userManager.UsernameExists(username) || adminManager.UsernameExists(username))
+            {
+                Console.WriteLine("Error: Username already exists. Please choose a different username.");
+                return;
+            }
 
-            UserAccount newUser = new UserAccount(username, password); // creates a new user account object
-            userManager.Insert(newUser); // adds the new user to the user manager
+            string password = InputValidation.GetValidatedPassword();
+            UserAccount newUser = new UserAccount(username, password);
+            userManager.Insert(newUser);
 
             Console.WriteLine("Registration successful! You can now log in.");
         }
+
 
         public Account LoginUser()
         {

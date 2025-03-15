@@ -20,26 +20,27 @@ namespace TechLearningRoadmap.Data
         private List<T> accounts;
         private static ArrayList registeredUsernames = new ArrayList(); // ✅ Stores usernames separately
 
-
-
         public DataManager()
         {
             accounts = new List<T>();
         }
+        public bool UsernameExists(string username)
+        {
+            //   method to check if a user exists
+            return registeredUsernames.Contains(username);
+        }
+        // Inserts a new account into the system, ensuring no duplicate usernames.
 
-        /// <summary>
-        /// Inserts a new account into the system, ensuring no duplicate usernames.
-        /// </summary>
         public void Insert(T data)
         {
-            if (registeredUsernames.Contains(data.Username)) // ✅ Check username in ArrayList
+            if (UsernameExists(data.Username)) // ✅ Check username in ArrayList
             {
                 Console.WriteLine("Error: Username already exists. Please choose a different username.");
                 return;
             }
 
-            accounts.Add(data); // ✅ Add account object to List<T>
-            registeredUsernames.Add(data.Username); // ✅ Track username in ArrayList
+            accounts.Add(data); //  Add account object to List<T>
+            registeredUsernames.Add(data.Username); // add username in ArrayList
             Console.WriteLine($"Account '{data.Username}' successfully registered.");
         }
 
@@ -63,7 +64,6 @@ namespace TechLearningRoadmap.Data
             // If no matching account is found, return an error
             if (accountToRemove == null)
             {
-                Console.WriteLine("Error: User not found.");
                 return false;
             }
 
@@ -74,19 +74,14 @@ namespace TechLearningRoadmap.Data
             if (confirmation == "yes")
             {
                 accounts.Remove(accountToRemove); // Remove from the list
-                Console.WriteLine($"User '{username}' has been deleted.");
                 return true;
             }
             else
             {
-                Console.WriteLine("Operation cancelled.");
                 return false;
             }
         }
-
-        /// <summary>
         /// Searches for a user account by username.
-        /// </summary>
         public T Search(string username)
         {
             // Iterate through the list to find the matching account
@@ -102,45 +97,7 @@ namespace TechLearningRoadmap.Data
             return null; // Return null if no match is found
         }
 
-
-        /// <summary>
-        /// Allows a user to update their password securely.
-        /// </summary>
-        public bool Edit(string username, string newPassword)
-        {
-            T accountToEdit = null;
-
-            // Iterate through the list to find the matching account
-            foreach (T account in accounts)
-            {
-                if (account.Username == username)
-                {
-                    accountToEdit = account;
-                    break; // Stop searching after finding the first match
-                }
-            }
-
-            // If no matching account is found, return an error
-            if (accountToEdit == null)
-            {
-                Console.WriteLine("Error: User not found.");
-                return false;
-            }
-
-            // Validate the new password
-            if (!InputValidation.ValidatePassword(newPassword))
-            {
-                Console.WriteLine("Error: Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
-                return false;
-            }
-
-            // Update the password
-            accountToEdit.UpdatePassword(newPassword);
-            Console.WriteLine($"Password updated successfully for user '{username}'.");
-            return true;
-        }
-
-
+      
         /// Retrieves all registered accounts.
         public List<T> GetAll()
         {

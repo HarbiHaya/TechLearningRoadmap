@@ -23,28 +23,24 @@ namespace TechLearningRoadmap.Models
             Console.WriteLine($" Admin: {Username} (Has Management Privileges)");
         }
 
-      
+
         public void ListUsers(DataManager<UserAccount> userManager)
         {
-            ArrayList allUsers = userManager.GetAll();
+            List<UserAccount> allUsers = userManager.GetAll(); // Directly retrieve as List<UserAccount>
 
             if (allUsers.Count == 0)
             {
-                Console.WriteLine(" No users registered.");
+                Console.WriteLine("No users registered.");
                 return;
             }
 
-            Console.WriteLine("\n===  Registered Users ===");
-            foreach (object obj in allUsers)
+            Console.WriteLine("\n=== Registered Users ===");
+            foreach (UserAccount user in allUsers) // Direct iteration, no casting needed
             {
-                if (obj is UserAccount user)
-                {
-                    Console.WriteLine($" {user.Username} | Learning: {user.Language} ({user.Level})");
-                }
+                Console.WriteLine($" {user.Username} | Learning: {user.Language} ({user.Level})");
             }
         }
 
-        
         public void ManageUsers(DataManager<UserAccount> userManager)
         {
             while (true)
@@ -76,101 +72,58 @@ namespace TechLearningRoadmap.Models
         /// Method for adding users 
         
         private void AddUser(DataManager<UserAccount> userManager)
+{
+    string username;
+    string password;
+
+    while (true)
+    {
+        Console.Write("Enter username for new user: ");
+        username = Console.ReadLine().Trim();
+
+        if (string.IsNullOrEmpty(username))
         {
-            string username;
-               string password= "  ";
-
-            while (true)
-            {
-                Console.Write(" Enter username for new user: ");
-                username = Console.ReadLine().Trim();
-
-                if (string.IsNullOrEmpty(username))
-                {
-                    Console.WriteLine(" Error: Username cannot be empty. Please enter a valid username.");
-                    continue;
-                }
-
-                if (userManager.Search(username) != null)
-                {
-                    Console.WriteLine(" Error: Username already exists. Choose a different one.");
-                    continue;
-                }
-
-                break;
-            }
-
-            while (true)
-            {
-                try
-                {
-                    Console.Write("Enter password: ");
-                    string passwordd = Console.ReadLine().Trim();
-
-                    if (string.IsNullOrEmpty(passwordd))
-                    {
-                        throw new ArgumentException("Password cannot be empty. Please enter a valid password.");
-                    }
-
-                    if (!InputValidation.ValidatePassword(passwordd))
-                    {
-                        throw new FormatException("Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a digit, and a special character.");
-                    }
-
-                    Console.WriteLine("Password accepted.");
-                    break;
-                }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                }
-            }
-
-
-
-            //  Create and add users
-            UserAccount newUser = new UserAccount(username, password);
-            userManager.Insert(newUser);
-            Console.WriteLine($" User '{username}' added successfully.");
+            Console.WriteLine("Error: Username cannot be empty. Please enter a valid username.");
+            continue;
         }
 
+        if (userManager.UsernameExists(username))
+        {
+            continue;
+        }
+
+        break;
+    }
+
+    password = InputValidation.GetValidatedPassword();
+    UserAccount newUser = new UserAccount(username, password);
+    userManager.Insert(newUser);
+    Console.WriteLine($"User '{username}' added successfully.");
+}
 
 
         /// Method Removing users 
         private void RemoveUser(DataManager<UserAccount> userManager)
         {
-            Console.Write(" Enter the username to remove: ");
+            Console.Write("Enter the username to remove: ");
             string usernameToRemove = Console.ReadLine().Trim();
 
-            ArrayList allUsers = userManager.GetAll();
-            UserAccount userToRemove = null;
-
-            foreach (object obj in allUsers)
+            if (!userManager.UsernameExists(usernameToRemove))
             {
-                if (obj is UserAccount user && user.Username.Equals(usernameToRemove, StringComparison.OrdinalIgnoreCase))
-                {
-                    userToRemove = user;
-                    break;
-                }
-            }
-
-            if (userToRemove == null)
-            {
-                Console.WriteLine(" Error: User not found.");
+                Console.WriteLine("Error: User not found.");
                 return;
             }
 
-            userManager.Delete(usernameToRemove);
-            Console.WriteLine($" User '{usernameToRemove}' removed successfully.");
+            if (userManager.Delete(usernameToRemove))
+            {
+                Console.WriteLine($"User '{usernameToRemove}' removed successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Error: Unable to remove the user.");
+            }
         }
+
 
 
     }
