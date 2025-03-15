@@ -36,6 +36,6 @@ namespace TechLearningRoadmap.Data
         /// <summary>
         /// Retrieves all registered accounts.
         /// </summary>
-        ArrayList GetAll(); // ✅ Changed from List<T> to ArrayList
+        List<T> GetAll(); // ✅ Changed from List<T> to ArrayList
     }
 }

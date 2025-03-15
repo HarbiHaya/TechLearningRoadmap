@@ -6,46 +6,63 @@ using System.Threading.Tasks;
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI;
+using System.Collections;
+
+// Haya Alharbi
+// 2035768
+// COCS307 - Assignment 1
+
 
 namespace TechLearningRoadmap.Services
 {
-    // manages authentication.
+    // manages authentication
     public class AuthService
     {
         private DataManager<UserAccount> userManager;
         private DataManager<AdminAccount> adminManager;
+        private static ArrayList registeredUsernames = new ArrayList(); // stores registered usernames for easier search
+
 
         public AuthService(DataManager<UserAccount> userManager, DataManager<AdminAccount> adminManager)
         {
             this.userManager = userManager;
             this.adminManager = adminManager;
+
+            // to load the registered usernames list with all registered usernames when called
+            foreach (var user in userManager.GetAll().Cast<UserAccount>())
+            {
+                registeredUsernames.Add(user.Username);
+            }
+            foreach (var admin in adminManager.GetAll().Cast<AdminAccount>())
+            {
+                registeredUsernames.Add(admin.Username);
+            }
         }
 
         public void RegisterUser()
         {
-            string username = InputValidation.ValidateStringInput("Enter a username");
+            string username = InputValidation.ValidateStringInput("Enter a username"); // ensures username is valid using the static method validate password in the input validation class
+            string password = InputValidation.GetValidatedPassword(); // ensures password is valid using the static method validate password in the input validation class
 
-            string password = InputValidation.GetValidatedPassword(); // ensures password is valid 
-
-            UserAccount newUser = new UserAccount(username, password);
-            userManager.Insert(newUser);
+            UserAccount newUser = new UserAccount(username, password); // creates a new user account object
+            userManager.Insert(newUser); // adds the new user to the user manager
 
             Console.WriteLine("Registration successful! You can now log in.");
         }
 
         public Account LoginUser()
         {
-            string username = InputValidation.ValidateStringInput("Enter your username");
+            string username = InputValidation.ValidateStringInput("Enter your username"); 
             string password = InputValidation.GetHiddenPassword("Enter your password");
 
-            UserAccount user = userManager.Search(username);
+            UserAccount user = userManager.Search(username); // searches for the user in the user manager to verify the login credentials
 
-            if (user != null && user.Login(username, password))
+            if (user != null && user.Login(username, password)) // if the user is found and the login credentials are correct
             {
-                Console.WriteLine("Login successful. Redirecting to user dashboard...");
+                Console.WriteLine("Login successful. Back to user dashboard...");
                 return user;
             }
-            else
+            else // if the user is not found or the login credentials are incorrect
             {
                 Console.WriteLine("Invalid credentials. Please try again.");
                 return null;
@@ -57,7 +74,7 @@ namespace TechLearningRoadmap.Services
             string username = InputValidation.ValidateStringInput("Enter admin username");
             string password = InputValidation.GetHiddenPassword("Enter admin password");
 
-            AdminAccount admin = adminManager.Search(username);
+            AdminAccount admin = adminManager.Search(username); // similar to the user login, searches for the admin in the admin manager
 
             if (admin != null && admin.Login(username, password))
             {
@@ -66,7 +83,7 @@ namespace TechLearningRoadmap.Services
             }
             else
             {
-                Console.WriteLine("ّnvalid credentials. Please try again.");
+                Console.WriteLine("ّInvalid credentials. Please try again.");
                 return null;
             }
         }
