@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+// Jana Alharbi
+// 2305762
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
-    /// Creating enum class for users  defualt choice of Language
+    //  enum class for users choice of Language
     public enum Language
     {
         None,  
@@ -15,7 +14,7 @@ namespace TechLearningRoadmap.Models
         Python
     }
 
-    /// Creating enum class for users  defualt choice of  Language levels 
+    //  enum class for users choice of experience levels 
     public enum Level
     {
         None,  

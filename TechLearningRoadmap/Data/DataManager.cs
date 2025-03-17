@@ -1,52 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechLearningRoadmap.Models;
-using System;
+﻿using TechLearningRoadmap.Models;
 using System.Collections;
-using System.Linq;
-using TechLearningRoadmap.UI;
+
+// Mayar Mahfouz
+// 2306450
+// COCS307 - Assignment 1
+
 
 namespace TechLearningRoadmap.Data
 {
-    /// <summary>
-    /// Generic data manager for handling user and admin accounts
-    /// </summary>
-    /// <typeparam name="T">Type parameter constrained to Account.</typeparam>
-    public class DataManager<T> : IDataManager<T> where T : Account
+    // Generic class for managing user/admin accounts
+    public class DataManager<T> : IDataManager<T>  where T : Account
     {
-        private List<T> accounts;
-        private static ArrayList registeredUsernames = new ArrayList(); // ✅ Stores usernames separately
+        private List<T> accounts; // a list that contains all accounts as objects
+        private static ArrayList registeredUsernames = new ArrayList(); // storing usernames for easier search
 
         public DataManager()
         {
             accounts = new List<T>();
         }
+        //  a method to check if a user exists by checking the username
         public bool UsernameExists(string username)
         {
-            //   method to check if a user exists
+          
             return registeredUsernames.Contains(username);
         }
-        // Inserts a new account into the system, ensuring no duplicate usernames.
 
+        // inserts a new account into the system, ensuring no duplicate usernames
         public void Insert(T data)
         {
-            if (UsernameExists(data.Username)) // ✅ Check username in ArrayList
+            if (UsernameExists(data.Username)) // checks username in ArrayList
             {
                 Console.WriteLine("Error: Username already exists. Please choose a different username.");
                 return;
             }
 
-            accounts.Add(data); //  Add account object to List<T>
+            accounts.Add(data); //  add account object to List<T>
             registeredUsernames.Add(data.Username); // add username in ArrayList
             Console.WriteLine($"Account '{data.Username}' successfully registered.");
         }
 
-        /// <summary>
-        /// Deletes a user account based on username.
-        /// </summary>
+        // deletes a user account based on username
         public bool Delete(string username)
         {
             T accountToRemove = null;
@@ -57,7 +50,7 @@ namespace TechLearningRoadmap.Data
                 if (account.Username == username)
                 {
                     accountToRemove = account;
-                    break; // Stop searching after the first match
+                    break; // stop searching after the first accoint is found and assigns it to accountToRemove
                 }
             }
 
@@ -67,13 +60,14 @@ namespace TechLearningRoadmap.Data
                 return false;
             }
 
-            // Ask for confirmation before deleting
+            // ask for confirmation before deleting
             Console.Write($"Are you sure you want to delete '{username}'? (yes/no): ");
             string confirmation = Console.ReadLine()?.Trim().ToLower();
 
             if (confirmation == "yes")
             {
-                accounts.Remove(accountToRemove); // Remove from the list
+                accounts.Remove(accountToRemove); // remove the assigned value from the list
+                registeredUsernames.Remove(username); // remove the username from the ArrayList
                 return true;
             }
             else
@@ -81,15 +75,15 @@ namespace TechLearningRoadmap.Data
                 return false;
             }
         }
-        /// Searches for a user account by username.
+        // Searches for a user account by username.
         public T Search(string username)
         {
-            // Iterate through the list to find the matching account
+            // iterate through the list to find the matching account
             foreach (T account in accounts)
             {
                 if (account.Username == username)
                 {
-                    return account; // Return the first matching account
+                    return account; // Return the first account that matches the username
                 }
             }
 
@@ -97,11 +91,11 @@ namespace TechLearningRoadmap.Data
             return null; // Return null if no match is found
         }
 
-      
-        /// Retrieves all registered accounts.
+
+        // retrieves all registered accounts
         public List<T> GetAll()
         {
-            return accounts; // ✅ Always returns the shared `ArrayList`
+            return accounts; // returns the accounts list
         }
 
 

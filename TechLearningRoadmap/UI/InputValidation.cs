@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Text.RegularExpressions;
 
 // Haya Alharbi
@@ -13,8 +9,8 @@ namespace TechLearningRoadmap.UI
 {
     public static class InputValidation
     {
-        
-      
+
+
         public static int ValidateMenuSelection(int min, int max) // this method is to ensure the input between the min and max for each menu we have 
         {
             int choice = min; // to avoid compile error 
@@ -101,9 +97,9 @@ namespace TechLearningRoadmap.UI
             return password;
         }
 
-        
+
         // to ensure that password meets requirements
-        
+
         public static bool ValidatePassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
@@ -118,7 +114,7 @@ namespace TechLearningRoadmap.UI
                 return false;
             }
 
-            if (!password.Any(char.IsUpper))
+            if (!password.Any(char.IsUpper)) // any is a method from System.Linq that checks if the element satisfies the condition
             {
                 Console.WriteLine("Error: Password must contain at least one uppercase letter.");
                 return false;
@@ -138,22 +134,22 @@ namespace TechLearningRoadmap.UI
 
             if (!Regex.IsMatch(password, @"[\W_]")) // to check if the password contains any special character
             {
-                Console.WriteLine(" Error: Password must contain at least one special character.");
+                Console.WriteLine("Error: Password must contain at least one special character.");
                 return false;
             }
 
             return true;
         }
 
-        
+
         public static string GetValidatedPassword() // gets the validated password
         {
             string password;
 
             do
             {
-                password = GetHiddenPassword("Enter a password"); 
-            } while (!InputValidation.ValidatePassword(password)); 
+                password = GetHiddenPassword("Enter a password");
+            } while (!InputValidation.ValidatePassword(password));
 
             return password;
         }

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+// Shahad Alamoudi 
+// 2309063
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
-    /// Represents the C# learning roadmap.
-    /// </summary>
+
+    // C# learning roadmap
+
     public class CSharpLevel : LanguageLevel
     {
         public CSharpLevel(Level level) : base(Language.CSharp, level) { }
 
-        /// <summary>
-        /// Assigns learning resources specific to C#
-        /// </summary>
+  
+        //  learning resources for C#
         protected override void AssignRoadmap()
         {
             LearningResources[Level.Beginner] = "C# Beginner Guide: https://learn.microsoft.com/en-us/dotnet/csharp/";

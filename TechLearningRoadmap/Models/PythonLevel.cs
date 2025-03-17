@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+// Shahad Alamoudi 
+// 2309063
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
-    /// Represents the Python learning roadmap
-    /// </summary>
+    
+    /// Python learning roadmap
+
     public class PythonLevel : LanguageLevel
     {
         public PythonLevel(Level level) : base(Language.Python, level) { }
 
-        /// <summary>
-        /// Assigns learning resources specific to Python.
-        /// </summary>
-        protected override void AssignRoadmap()
+    
+        //  learning resources recpmmended to Python
+     
+        protected override void AssignRoadmap() // protected to allow only subclasses to access
+      
         {
             LearningResources[Level.Beginner] = "Python Basics: https://www.python.org/about/gettingstarted/";
             LearningResources[Level.Intermediate] = "Python Intermediate Guide: https://realpython.com/";

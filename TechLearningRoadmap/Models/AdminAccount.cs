@@ -1,11 +1,9 @@
-﻿
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TechLearningRoadmap.Data;
+﻿using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI;
 
+// Jana Alharbi
+// 2305762
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 
@@ -20,13 +18,14 @@ namespace TechLearningRoadmap.Models
         ///Method implemented from parent class 
         public override void DisplayInfo()
         {
-            Console.WriteLine($" Admin: {Username} (Has Management Privileges)");
+            Console.WriteLine($" Admin: {Username} "); // hasnt been actually used in the program 
         }
 
 
+        // list users with theit learning preferences
         public void ListUsers(DataManager<UserAccount> userManager)
         {
-            List<UserAccount> allUsers = userManager.GetAll(); // Directly retrieve as List<UserAccount>
+            List<UserAccount> allUsers = userManager.GetAll(); // Directly retrieve as List<UserAccount> 
 
             if (allUsers.Count == 0)
             {
@@ -35,20 +34,21 @@ namespace TechLearningRoadmap.Models
             }
 
             Console.WriteLine("\n=== Registered Users ===");
-            foreach (UserAccount user in allUsers) // Direct iteration, no casting needed
+            foreach (UserAccount user in allUsers) 
             {
-                Console.WriteLine($" {user.Username} | Learning: {user.Language} ({user.Level})");
+                Console.WriteLine($" {user.Username} | Learning: {user.Language} ({user.Level})"); 
             }
         }
 
-        public void ManageUsers(DataManager<UserAccount> userManager)
+        // menu for managing users
+        public void ManageUsers(DataManager<UserAccount> userManager) 
         {
             while (true)
             {
                 Console.WriteLine("\n===   User Management ===");
-                Console.WriteLine("1️ Add User");
-                Console.WriteLine("2️ Remove User");
-                Console.WriteLine("3️ Back to Admin Panel");
+                Console.WriteLine(" Add User");
+                Console.WriteLine("2️. Remove User");
+                Console.WriteLine("3️. Back to Admin Panel");
 
                 int choice = InputValidation.ValidateMenuSelection(1, 3);
 
@@ -62,7 +62,7 @@ namespace TechLearningRoadmap.Models
                 }
                 else if (choice == 3)
                 {
-                    Console.WriteLine(" Returning to Admin Panel...");
+                    Console.WriteLine(" Back to Admin Panel");
                     break;
                 }
             }
@@ -70,36 +70,36 @@ namespace TechLearningRoadmap.Models
 
 
         /// Method for adding users 
-        
         private void AddUser(DataManager<UserAccount> userManager)
-{
-    string username;
-    string password;
-
-    while (true)
-    {
-        Console.Write("Enter username for new user: ");
-        username = Console.ReadLine().Trim();
-
-        if (string.IsNullOrEmpty(username))
         {
-            Console.WriteLine("Error: Username cannot be empty. Please enter a valid username.");
-            continue;
+            string username;
+            string password;
+
+            while (true)
+            {
+                Console.Write("Enter username for new user: ");
+                username = Console.ReadLine().Trim(); // trim to remove whitespaces
+
+                if (string.IsNullOrEmpty(username))
+                {
+                    Console.WriteLine("Error: Username cannot be empty. Please enter a valid username.");
+                    continue;
+                }
+
+                if (userManager.UsernameExists(username))
+                {
+                    Console.WriteLine("Error: Username is taken. Please enter a different username.");
+                    continue;
+                }
+
+                break;
+            }
+
+            password = InputValidation.GetValidatedPassword();
+            UserAccount newUser = new UserAccount(username, password);
+            userManager.Insert(newUser);
+           
         }
-
-        if (userManager.UsernameExists(username))
-        {
-            continue;
-        }
-
-        break;
-    }
-
-    password = InputValidation.GetValidatedPassword();
-    UserAccount newUser = new UserAccount(username, password);
-    userManager.Insert(newUser);
-    Console.WriteLine($"User '{username}' added successfully.");
-}
 
 
         /// Method Removing users 

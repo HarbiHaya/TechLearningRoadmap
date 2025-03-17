@@ -1,14 +1,14 @@
-using System;
-using System.Security.Cryptography;
+using System.Security.Cryptography; // for hashing method 
 using System.Text;
-using System.Text.RegularExpressions;
 
-
+// Jana Alharbi
+// 2305762
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
 
-    /// create  a new class
+    // create  a new class
     public abstract class Account
     {
         private string username;
@@ -45,28 +45,7 @@ namespace TechLearningRoadmap.Models
             SetPassword(password); // Ensure  that password is always hashed at creation
         }
 
-        /// Method for updating password 
-        public void UpdatePassword(string newPassword)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(newPassword))
-                {
-                    throw new ArgumentException("Password cannot be empty.");
-                }
-
-                SetPassword(newPassword);
-                Console.WriteLine("Password has been updated successfully.");
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Error: Password cannot be empty.");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An unexpected error occurred.");
-            }
-        }
+       
 
         /// logging in method 
         public bool Login(string username, string password)
@@ -106,7 +85,6 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// Create an abstract DisplayInfo method 
         public abstract void DisplayInfo();
     }
 }

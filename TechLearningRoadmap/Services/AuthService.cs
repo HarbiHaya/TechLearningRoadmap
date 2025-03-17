@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.Data;
 using TechLearningRoadmap.UI;
@@ -43,7 +39,7 @@ namespace TechLearningRoadmap.Services
             }
         }
 
-        
+
 
         public void RegisterUser()
         {
@@ -64,7 +60,7 @@ namespace TechLearningRoadmap.Services
 
         public Account LoginUser()
         {
-            string username = InputValidation.ValidateStringInput("Enter your username"); 
+            string username = InputValidation.ValidateStringInput("Enter your username");
             string password = InputValidation.GetHiddenPassword("Enter your password");
 
             UserAccount user = userManager.Search(username); // searches for the user in the user manager to verify the login credentials

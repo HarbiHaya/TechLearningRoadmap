@@ -1,8 +1,8 @@
-﻿
-using System;
-using TechLearningRoadmap.Models;
-using TechLearningRoadmap.Services;
-using TechLearningRoadmap.UI;
+﻿using TechLearningRoadmap.UI;
+
+// Jana Alharbi
+// 2305762
+// COCS307 - Assignment 1
 
 
 namespace TechLearningRoadmap.Models
@@ -68,7 +68,7 @@ namespace TechLearningRoadmap.Models
             }
             else
             {
-                Console.WriteLine("❌ Invalid selection.");
+                Console.WriteLine("Invalid selection.");
                 return;
             }
 
@@ -90,11 +90,11 @@ namespace TechLearningRoadmap.Models
             }
             else
             {
-                Console.WriteLine("❌ Invalid selection.");
+                Console.WriteLine("Invalid selection.");
                 return;
             }
 
-            Console.WriteLine($"✅ Your learning path has been set: {Language} ({Level})");
+            Console.WriteLine($"Your learning path has been set: {Language} ({Level})");
         }
     }
 }

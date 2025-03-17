@@ -1,29 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System;
-using System.Collections.Generic;
-using TechLearningRoadmap.Models;
+﻿
+// Shahad Alamoudi 
+// 2309063
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
-    /// <summary>
-    /// Abstract base class representing a learning roadmap.
-    /// Stores programming language-specific learning resources.
-    /// </summary>
+    // Abstract class for learning roadmap
+    // Assigns programming language-level learning resources
+   
     public abstract class LanguageLevel
     {
-        public Language LanguageType { get; private set; }
-        public Level UserLevel { get; private set; }
-        protected Dictionary<Level, string> LearningResources;
 
-        /// <summary>
-        /// Constructor to initialize language level.
-        /// </summary>
-        protected LanguageLevel(Language language, Level level)
+        protected Dictionary<Level, string> LearningResources; // Learning resources for each level
+
+        public Language LanguageType
+        {
+            get
+            {
+                return LanguageType;
+            }
+            set
+            {
+                LanguageType = value;
+            }
+        }
+        public Level UserLevel
+        {
+            get
+            {
+                return UserLevel;
+            }
+            set
+            {
+                UserLevel = value;
+            }
+        }
+
+        public LanguageLevel(Language language, Level level)
         {
             LanguageType = language;
             UserLevel = level;
@@ -31,14 +44,13 @@ namespace TechLearningRoadmap.Models
             AssignRoadmap();
         }
 
-        /// <summary>
-        /// Abstract method to be implemented by subclasses to assign learning resources...
-        /// </summary>
+        // Abstract method to be implemented by subclasses to assign learning resources
+      
         protected abstract void AssignRoadmap();
 
-        /// <summary>
-        /// Retrieves the learning resource based on the user's level aaaaa.
-        /// </summary>
+      
+        // Gets the learning resource based on  user's level 
+    
         public string GetLearningResource()
         {
             if (LearningResources.ContainsKey(UserLevel))
@@ -47,14 +59,13 @@ namespace TechLearningRoadmap.Models
             }
             else
             {
-                throw new InvalidOperationException("No resources available for the selected level.");
+                throw new InvalidOperationException("No resources for the selected level.");
             }
         }
 
 
-        /// <summary>
-        /// Displays the assigned roadmap to the user.
-        /// </summary>
+        /// Displays the assigned roadmap to the user
+       
         public void DisplayRoadmap()
         {
             try

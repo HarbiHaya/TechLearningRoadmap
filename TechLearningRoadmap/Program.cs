@@ -1,29 +1,28 @@
-using System;
+
 using TechLearningRoadmap.Models;
 using TechLearningRoadmap.UI;
 using TechLearningRoadmap.Services;
 using TechLearningRoadmap.Data;
-using TechLearningRoadmap.UI;
 
 
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap
 {
-  
 
     class Program
     {
-        static void Main()
-        {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        static void Main() { 
 
-
-
-            // Ensure SINGLE instance of DataManager<T>
             DataManager<UserAccount> userManager = new DataManager<UserAccount>();
             DataManager<AdminAccount> adminManager = new DataManager<AdminAccount>();
 
-            //Predefine Admin Accounts
+            // predefine admin accounts
+            // for testing purposes we added some admin accounts 
+
+            AdminAccount admin = new AdminAccount("maryam", "MaryamM123@");
+            adminManager.Insert(admin);
+
             AdminAccount admin1 = new AdminAccount("jana", "JanaA123@");
             adminManager.Insert(admin1);
 
@@ -33,24 +32,30 @@ namespace TechLearningRoadmap
             AdminAccount admin3 = new AdminAccount("shahad", "ShahadD123@");
             adminManager.Insert(admin3);
 
-            AdminAccount admin4 = new AdminAccount("mayar", "MayarR123@");  
+            AdminAccount admin4 = new AdminAccount("mayar", "MayarR123@");
             adminManager.Insert(admin4);
+
+            // some users for an easier manipulating :) 
 
             UserAccount user = new UserAccount("user", "User123@");
             userManager.Insert(user);
 
             UserAccount user2 = new UserAccount("user2", "User123@");
-            userManager.Insert(user2);  
+            userManager.Insert(user2);
 
 
-
-            //Create Services
+            // getting services ready to be used  
             AuthService authService = new AuthService(userManager, adminManager);
             RoadmapService roadmapService = new RoadmapService();
+
+            // menus too 
             Menu menu = new Menu(authService, roadmapService, userManager, adminManager);
 
-            //Run the Program
+            // Program now starts
             menu.DisplayMenu();
+
+
+
         }
     }
 

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+// Shahad Alamoudi 
+// 2309063
+// COCS307 - Assignment 1
 
 namespace TechLearningRoadmap.Models
 {
-    
-    /// Represents the Java learning roadmap.
-    /// </summary>
+
+    // Java learning roadmap
+
     public class JavaLevel : LanguageLevel
     {
         public JavaLevel(Level level) : base(Language.Java, level) { }
 
-        /// <summary>
-        /// Assigns learning resources specific to Java
-        /// </summary>
+        // Assigns learning resources specific to Java
         protected override void AssignRoadmap()
         {
             LearningResources[Level.Beginner] = "Java for Beginners:  https://www.w3schools.com/java/";
