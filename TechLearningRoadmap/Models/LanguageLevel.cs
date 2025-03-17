@@ -13,28 +13,8 @@ namespace TechLearningRoadmap.Models
 
         protected Dictionary<Level, string> LearningResources; // Learning resources for each level
 
-        public Language LanguageType
-        {
-            get
-            {
-                return LanguageType;
-            }
-            set
-            {
-                LanguageType = value;
-            }
-        }
-        public Level UserLevel
-        {
-            get
-            {
-                return UserLevel;
-            }
-            set
-            {
-                UserLevel = value;
-            }
-        }
+        public Language LanguageType { get; private set; }
+        public Level UserLevel { get; private set; }
 
         public LanguageLevel(Language language, Level level)
         {

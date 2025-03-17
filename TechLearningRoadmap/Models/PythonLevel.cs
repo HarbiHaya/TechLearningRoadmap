@@ -18,9 +18,9 @@ namespace TechLearningRoadmap.Models
         protected override void AssignRoadmap() // protected to allow only subclasses to access
       
         {
-            LearningResources[Level.Beginner] = "Python Basics: https://www.python.org/about/gettingstarted/";
-            LearningResources[Level.Intermediate] = "Python Intermediate Guide: https://realpython.com/";
-            LearningResources[Level.Advanced] = "Advanced Python Topics: https://docs.python.org/3/tutorial/advanced.html";
+            LearningResources[Level.Beginner] = "Learn Python Fundamentals: https://cs50.harvard.edu/python/2022/?utm_source";
+            LearningResources[Level.Intermediate] = "Python Intermediate Guide: Enhance Python Skills with Intermediate Topics: https://realpython.com/tutorials/intermediate/?utm_source"; 
+            LearningResources[Level.Advanced] = "Advanced Python Topics: https://www.youtube.com/playlist?list=PLDVrhnY7hFVoA0N5NhRA9lPur5dxXBujy";
         }
     }
 }
