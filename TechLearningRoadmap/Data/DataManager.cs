@@ -74,6 +74,36 @@ namespace TechLearningRoadmap.Data
                 return false; // return false if the user does not confirm
             }
         }
+
+        public bool EditUsername(string oldUsername, string newUsername)
+        {
+            if (!UsernameExists(oldUsername)) // Check if the old username exists
+            {
+                Console.WriteLine("Error: User not found.");
+                return false;
+            }
+
+            if (UsernameExists(newUsername)) // Ensure the new username is unique
+            {
+                Console.WriteLine("Error: This username is already taken. Try another.");
+                return false;
+            }
+
+            foreach (T account in accounts)
+            {
+                if (account.Username == oldUsername)
+                {
+                    registeredUsernames.Remove(oldUsername);
+                    registeredUsernames.Add(newUsername);
+                    account.Username = newUsername; // Update username in the object
+                    Console.WriteLine($"Username changed: from {oldUsername} to {newUsername}");
+                    return true;
+                }
+            }
+
+            return false; 
+        }
+
         // Searches for a user account by username.
         public T Search(string username)
         {

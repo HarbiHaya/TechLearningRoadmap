@@ -48,7 +48,8 @@ namespace TechLearningRoadmap.Models
                 Console.WriteLine("\n===   User Management ===");
                 Console.WriteLine("1. Add User");
                 Console.WriteLine("2. Remove User");
-                Console.WriteLine("3. Back to Admin Panel");
+                Console.WriteLine("3. Edit User");
+                Console.WriteLine("4. Back to Admin Panel");
 
                 int choice = InputValidation.ValidateMenuSelection(1, 3);
 
@@ -61,6 +62,10 @@ namespace TechLearningRoadmap.Models
                     RemoveUser(userManager);
                 }
                 else if (choice == 3)
+                {
+                    EditUser(userManager);
+                }
+                else if (choice == 4)
                 {
                     Console.WriteLine(" Back to Admin Panel");
                     break;
@@ -123,6 +128,30 @@ namespace TechLearningRoadmap.Models
                 Console.WriteLine("Error: Unable to remove the user.");
             }
         }
+        private void EditUser(DataManager<UserAccount> userManager)
+        {
+            Console.Write("Enter the username to edit: ");
+            string oldUsername = Console.ReadLine().Trim();
+
+            if (!userManager.UsernameExists(oldUsername))
+            {
+                Console.WriteLine("Error: User not found.");
+                return;
+            }
+
+            Console.Write("Enter the new username: ");
+            string newUsername = Console.ReadLine().Trim();
+
+            if (userManager.EditUsername(oldUsername, newUsername))
+            {
+                Console.WriteLine("Username updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Failed to update username.");
+            }
+        }
+
 
 
 

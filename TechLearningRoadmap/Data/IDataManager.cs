@@ -20,6 +20,9 @@ namespace TechLearningRoadmap.Data
         // Deletes a user account based on username
         bool Delete(string username);
 
+        // Edits a user account's username
+        public bool EditUsername(string oldUsername, string newUsername);
+
         // Searches for a user account by username
         T Search(string username);
 

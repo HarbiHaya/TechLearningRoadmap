@@ -47,7 +47,7 @@ namespace TechLearningRoadmap.Models
         
        
 
-        /// logging in method 
+        // logging in method 
         public bool Login(string username, string password)
         {
             if (Username == username && PasswordHash == HashPassword(password))
@@ -61,14 +61,15 @@ namespace TechLearningRoadmap.Models
             }
         }
 
-        /// Method for setting password 
+        // Method for setting password 
 
         private void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
         }
 
-        /// making sure that password is hashed 
+        // making sure that password is hashed 
+        // this methids has been taken and modified from https://stackoverflow.com/questions/12416249/hashing-a-string-with-sha256
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
