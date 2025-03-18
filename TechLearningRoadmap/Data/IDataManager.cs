@@ -8,8 +8,8 @@ using TechLearningRoadmap.Models;
 namespace TechLearningRoadmap.Data
 {
 
-    // Generic interface for managing user/admin accounts
-    public interface IDataManager<T> where T : Account
+    // Generic interface for managing user and admin accounts
+    public interface IDataManager<T> where T : Account // restriction to account class 
     {
         // checks if a username exists
         bool UsernameExists(string username);

@@ -44,7 +44,7 @@ namespace TechLearningRoadmap.Models
             Username = username;
             SetPassword(password); // Ensure  that password is always hashed at creation
         }
-
+        
        
 
         /// logging in method 

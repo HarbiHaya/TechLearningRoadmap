@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace TechLearningRoadmap.Data
 {
-    // Generic class for managing user/admin accounts
+    // Generic class for managing user and admin accounts
     public class DataManager<T> : IDataManager<T>  where T : Account
     {
         private List<T> accounts; // a list that contains all accounts as objects
@@ -21,14 +21,13 @@ namespace TechLearningRoadmap.Data
         //  a method to check if a user exists by checking the username
         public bool UsernameExists(string username)
         {
-          
             return registeredUsernames.Contains(username);
         }
 
         // inserts a new account into the system, ensuring no duplicate usernames
         public void Insert(T data)
         {
-            if (UsernameExists(data.Username)) // checks username in ArrayList
+            if (UsernameExists(data.Username)) // checks username in ArrayList 
             {
                 Console.WriteLine("Error: Username already exists. Please choose a different username.");
                 return;
@@ -62,7 +61,7 @@ namespace TechLearningRoadmap.Data
 
             // ask for confirmation before deleting
             Console.Write($"Are you sure you want to delete '{username}'? (yes/no): ");
-            string confirmation = Console.ReadLine()?.Trim().ToLower();
+            string confirmation = Console.ReadLine()?.Trim().ToLower(); // YeS -> yes
 
             if (confirmation == "yes")
             {
@@ -72,7 +71,7 @@ namespace TechLearningRoadmap.Data
             }
             else
             {
-                return false;
+                return false; // return false if the user does not confirm
             }
         }
         // Searches for a user account by username.

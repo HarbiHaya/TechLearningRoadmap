@@ -10,9 +10,7 @@ namespace TechLearningRoadmap.Models
    
     public abstract class LanguageLevel
     {
-
         protected Dictionary<Level, string> LearningResources; // Learning resources for each level
-
         public Language LanguageType { get; private set; }
         public Level UserLevel { get; private set; }
 
@@ -25,10 +23,8 @@ namespace TechLearningRoadmap.Models
         }
 
         // Abstract method to be implemented by subclasses to assign learning resources
-      
         protected abstract void AssignRoadmap();
 
-      
         // Gets the learning resource based on  user's level 
     
         public string GetLearningResource()
@@ -45,13 +41,12 @@ namespace TechLearningRoadmap.Models
 
 
         /// Displays the assigned roadmap to the user
-       
         public void DisplayRoadmap()
         {
             try
             {
                 Console.WriteLine("--------------------------------------------------");
-                Console.WriteLine($"Programming Language: {LanguageType}");
+                Console.WriteLine($"Programming Language: {LanguageType}"); 
                 Console.WriteLine($"Experience Level: {UserLevel}");
                 Console.WriteLine($"Recommended Resource: {GetLearningResource()}");
                 Console.WriteLine("--------------------------------------------------");

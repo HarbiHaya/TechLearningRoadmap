@@ -46,9 +46,9 @@ namespace TechLearningRoadmap.Models
             while (true)
             {
                 Console.WriteLine("\n===   User Management ===");
-                Console.WriteLine(" Add User");
-                Console.WriteLine("2️. Remove User");
-                Console.WriteLine("3️. Back to Admin Panel");
+                Console.WriteLine("1. Add User");
+                Console.WriteLine("2. Remove User");
+                Console.WriteLine("3. Back to Admin Panel");
 
                 int choice = InputValidation.ValidateMenuSelection(1, 3);
 
